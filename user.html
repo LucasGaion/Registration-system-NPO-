@@ -8,7 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/public/style.css">
     <style>
         #forms-cadastro {
             display: none;
@@ -169,43 +169,10 @@
         </nav>
         <div id="content" class="p-4 p-md-5 pt-5">
             <div id="forms-cadastro">
-                <div class="result-container">
-                    <ul id="resultsList" class="row">
-                        <% results.forEach(result => { %>
-                            <li class="col-md-4">
-                                <span class="bold1"><%= result.email %></span>
-                                <p>
-                                    Área de Atuação: <span class="bold"><%= result.area_atuacao %></span>,
-                                    Tempo de Estudo: <span class="bold"><%= result.tempo_estudo %></span>,
-                                    Nível de Cloud: <span class="bold"><%= result.nivel_cloud %></span>,
-                                    Conhecimento AWS: <span class="bold"><%= result.conhecimento_aws %></span>,
-                                    Conhecimento em Redes: <span class="bold"><%= result.conhecimento_redes %></span>,
-                                    Conhecimento em Armazenamento: <span class="bold"><%= result.conhecimento_armazenamento %></span>,
-                                    Conhecimento em Virtualização: <span class="bold"><%= result.conhecimento_virtualizacao %></span>,
-                                    Conhecimento em Windows: <span class="bold"><%= result.conhecimento_windows %></span>,
-                                    Conhecimento em Linux: <span class="bold"><%= result.conhecimento_linux %></span>,
-                                    Conhecimento em Segurança: <span class="bold"><%= result.conhecimento_seguranca %></span>,
-                                    Conhecimento em IAM: <span class="bold"><%= result.conhecimento_iam %></span>
-                                </p>
-                            </li>
-                        <% }); %>
-                    </ul>
-                </div>
+                
             </div>
             <div id="certificacoes-cadastro">
                 <ul id="resultsList">
-                    <% results.forEach(certificacao => { %>
-                        <li class="certificacao-item">
-                            <p>Nome da Certificação:</p>
-                            <h5><%= certificacao.nome %></h5>
-                            <p>Nome da Instituição:</p>
-                            <h5><%= certificacao.instituicao %></h5>
-                            <p>Data da Certificação:</p>
-                            <h5><%= certificacao.dataa %></h5>
-                            <img src="data:image/png;base64,<%= certificacao.imagem %>" class="card-img-top" alt="Imagem da Certificação">
-                            <a href="<%= certificacao.url %>" class="btn btn-primary" target="_blank">Acessar URL</a>
-                        </li>
-                    <% }); %>
                 </ul>
             </div>
         </div>
