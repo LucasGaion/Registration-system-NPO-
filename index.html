@@ -6,36 +6,6 @@
 </head>
 <body>
     
-    <script>
-        // Verifica se é a primeira vez que o usuário acessa a página
-        const isFirstVisit = !localStorage.getItem('visited');
-
-        // Define a URL de redirecionamento com base no estado de visita
-        let redirectUri;
-        if (isFirstVisit) {
-            console.log("Primeira visita");
-            redirectUri = 'https://main.dqu65ijx4l0b6.amplifyapp.com/forms'; // Se for a primeira visita, redireciona para forms.html
-        } else {
-            console.log("Visita subsequente");
-            redirectUri = 'https://main.dqu65ijx4l0b6.amplifyapp.com/user'; // Se não for a primeira visita, redireciona para user.html
-        }
-
-        console.log("Redirecionamento para:", redirectUri);
-
-        // Configurações do provedor de autenticação OAuth 2.0
-        const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-        const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
-        const responseType = 'code';
-        const scope = 'openid email profile';
-
-        // Define a URL de autorização
-        const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-
-        console.log("URL de autorização:", authorizationUrl);
-
-        // Redireciona o usuário para a URL apropriada
-        window.location.href = authorizationUrl;
-        
-    </script>
+    
 </body>
 </html>
