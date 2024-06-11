@@ -8,19 +8,6 @@
   <link rel="stylesheet" href="/public/styles/forms.css">
 </head>
 <body>
-
-  <script>
-    // Configurações do provedor de autenticação OAuth 2.0
-    const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-    const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
-    const redirectUri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms.html'; 
-    const responseType = 'code';
-    const scope = 'openid email profile';
-
-    // Redirecionar automaticamente ao provedor
-    const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-    window.location.href = authorizationUrl;
-</script>
   
   <div class="container mt-5">
     <form action="/forms/salvar" method="POST" id="myForm">
@@ -159,6 +146,24 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('myForm');
+        const confirmationForms = document.getElementById('confirmationForms');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            confirmationForms.style.display = 'block';
+            confirmationMessage.innerText = 'Cadastro realizado com sucesso! Agradecemos por fornecer as informações no formulário.';
+            setTimeout(function() {
+                form.submit();
+            }, 2000);
+        });
+    });
+</script>
+
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
