@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<script>
+    // Configurações do provedor de autenticação OAuth 2.0
+    const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
+    const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
+    const redirectUri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms.php'; 
+    const responseType = 'code';
+    const scope = 'openid email profile';
+
+    // Redirecionar automaticamente ao provedor
+    const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+    window.location.href = authorizationUrl;
+</script>
+</body>
+</html>
