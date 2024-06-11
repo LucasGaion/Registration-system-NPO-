@@ -8,25 +8,18 @@
     
 
     <script>
-        // Verificar se o usuário está autenticado
-        const isAuthenticated = true; // Aqui você verifica a autenticação do usuário
+        // Configurações do provedor de autenticação OAuth 2.0
+        const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
+        const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
+        const redirectUri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms'; 
+        const responseType = 'code';
+        const scope = 'openid email profile';
+        
 
-        // Se autenticado, redirecionar para o formulário
-        if (isAuthenticated) {
-            // Configurações do provedor de autenticação OAuth 2.0
-            const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-            const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
-            const redirectUri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms'; 
-            const responseType = 'code';
-            const scope = 'openid email profile';
 
-            // Redirecionar automaticamente ao provedor se autenticado
-            const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-            window.location.href = authorizationUrl;
-        } else {
-            // Se não autenticado, redirecionar para a página de login
-            window.location.href = '/'; // Página de login
-        }
+        // redireciona automaticamente ao provedor
+        const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+        window.location.href = authorizationUrl;
     </script>
 </body>
 </html>
