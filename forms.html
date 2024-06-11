@@ -147,22 +147,57 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <script>
+   <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('myForm');
-        const confirmationForms = document.getElementById('confirmationForms');
-        const confirmationMessage = document.getElementById('confirmationMessage');
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            confirmationForms.style.display = 'block';
-            confirmationMessage.innerText = 'Cadastro realizado com sucesso! Agradecemos por fornecer as informações no formulário.';
-            setTimeout(function() {
-                form.submit();
-            }, 2000);
-        });
+      if (code) {
+        fetch('https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            client_id: '8cf6d21d-6371-4da7-9eca-a4aac477492d',
+            redirect_uri: 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms.html',
+            grant_type: 'authorization_code',
+            code: code,
+            client_secret: 'YOUR_CLIENT_SECRET', // Substitua pelo seu segredo do cliente
+            scope: 'openid email profile'
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.access_token) {
+            // Guardar o token de acesso e continuar a lógica de aplicação
+            console.log('Access Token:', data.access_token);
+            // Aqui você pode usar o token para acessar recursos protegidos
+          } else {
+            console.error('Erro ao obter o token de acesso:', data);
+          }
+        })
+        .catch(error => console.error('Erro na troca do código por token:', error));
+      } else {
+        console.error('Código de autorização não encontrado na URL.');
+      }
+
+      const form = document.getElementById('myForm');
+      const confirmationForms = document.getElementById('confirmationForms');
+      const confirmationMessage = document.getElementById('confirmationMessage');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        confirmationForms.style.display = 'block';
+        confirmationMessage.innerText = 'Cadastro realizado com sucesso! Agradecemos por fornecer as informações no formulário.';
+        
+        setTimeout(function() {
+          form.submit();
+        }, 2000); // Aguarda 2 segundos 
+      });
     });
-</script>
+  </script>
 
 
   <script>
