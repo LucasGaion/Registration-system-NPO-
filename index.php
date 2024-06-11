@@ -9,7 +9,7 @@ if (isset($_GET['code'])) {
     // Dados necessários para a solicitação do token de acesso
     $client_id = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
     //$client_secret = 'SEU_CLIENT_SECRET';
-    $redirect_uri = 'https://assinaturas.nposistemas.com.br/forms.php';
+    $redirect_uri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms.php';
     $token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
 
     // Parâmetros da solicitação do token de acesso
@@ -58,18 +58,7 @@ if (isset($_GET['code'])) {
 </head>
 <body>
 
-  <script>
-    // Configurações do provedor de autenticação OAuth 2.0
-    const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-    const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
-    const redirectUri = 'https://main.d3eu9x1bmwpywj.amplifyapp.com/forms'; 
-    const responseType = 'code';
-    const scope = 'openid email profile';
-
-    // Redirecionar automaticamente ao provedor
-    const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-    window.location.href = authorizationUrl;
-</script>
+ 
   
   <div class="container mt-5">
     <form action="/forms/salvar" method="POST" id="myForm">
