@@ -8,189 +8,228 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/styles/style.css">
+    <link rel="stylesheet" href="/styles/style.css">
     <style>
-        #forms-cadastro {
-            display: none;
-        }
+.certificacao-item {
+    margin-top: 20px;
+    margin-right: 20px;
+    width: calc(33.33% - 20px);
+    float: left;
+    border-radius: 10px;
+    overflow: hidden; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /
+}
 
-        #certificacoes-cadastro {
-            display: block;
-        }
+.certificacao-item img {
+    width: 95%; 
+    height: 70%; 
+}
 
-        .container {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            margin-top: 30px;
-        }
+.certificacao-item p {
+    font-size: 12px; 
+    margin-bottom: 10px; 
+    color: #838383; 
+    margin-left: 10px; 
+    margin-top: 10px;
+}
 
-        .result-container {
-            padding: 20px;
-            max-width: 1000px; 
-            width: 1000%;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
+.certificacao-item h5 {
+    margin-top: -10px;
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+    color: #144d80; 
+    margin-left: 10px; 
+}
 
-        .result-container h1 {
-            color: #144d80;
-            margin-bottom: 15px;
-        }
 
-        .result-container ul {
-            list-style-type: none;
-            padding: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .result-container li {
-            margin-bottom: 18px;
-            width: 48%; 
-        }
-
-        .result-container li label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .result-container p {
-            margin-top: -10px;
-            white-space: pre-line;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #464545;
-            text-align: left;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .bold1 {
-            font-weight: bold;
-            border: 1px solid #144d80;
-            padding: 5px 8px;
-            border-radius: 5px;
-            background-color: #144d80;
-            color: #ffffff;
-            display: inline-block;
-            margin-right: 150px;
-            cursor: pointer; 
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .bold1:hover {
-            background-color: #0d355a; 
-            color: #ffffff; 
-        }
-
-        form h1 {
-            color: #06010a;
-            margin-bottom: 15px;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .col-md-4 {
-            flex: 0 0 33.33%;
-            max-width: 33.33%;
-        }
-
-        .certificacao-item {
-            margin-top: 20px;
-            margin-right: 20px;
-            width: calc(33.33% - 20px);
-            float: left;
-            border-radius: 10px;
-            overflow: hidden; 
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-        }
-
-        .certificacao-item img {
-            width: 95%; 
-            height: 70%; 
-        }
-
-        .certificacao-item p {
-            font-size: 12px; 
-            margin-bottom: 10px; 
-            color: #06010a; 
-            margin-left: 10px; 
-            margin-top: 10px;
-        }
-
-        .certificacao-item h5 {
-            margin-top: -10px;
-            font-size: 20px; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-            color: #06010a; 
-            margin-left: 10px; 
-        }
     </style>
 </head>
 <body>
-    
-    <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar">
-            <div class="custom-menu">
-                <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                    <i class="fa fa-bars"></i>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-            </div>
-            <h2 class="welcome">
-                <span class="gray-text">Welcome</span> <span class="username">&#128075; Lucas</span> <span class="gray-text">(admin)</span>
-            </h2>
-            <div class="p-4 pt-5">
-                
-                <h1><a href="" class="logo">Tela Inicial</a></h1>
-                <ul class="list-unstyled components mb-5">
-                    <li>
-                        <a href="#" id="minhas-certificacoes-link"><i class='bx bxs-certification'></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="#" id="cadastrar-link"><i class='bx bx-message-square-add'></i> Certificações</a>
-                    </li>
-                    <li>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div id="content" class="p-4 p-md-5 pt-5">
-            <div id="forms-cadastro">
-                
-            </div>
-            <div id="certificacoes-cadastro">
-                <ul id="resultsList">
-                </ul>
-            </div>
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only">Toggle Menu</span>
+            </button>
         </div>
+        <div class="p-4 pt-5">
+            <h1><a href="" class="logo">Tela inicial</a></h1>
+            <ul class="list-unstyled components mb-5">
+                <li>
+                    <a href="#" id="minhas-certificacoes-link"><i class='bx bxs-certification'></i> Minhas Certificações</a>
+                </li>
+                <li>
+                    <a href="#" id="cadastrar-link"><i class='bx bx-message-square-add'></i> Cadastrar Certificações</a>
+                </li>
+                <!--
+                     <li>
+                    <a href="/forms"><i class='bx bx-cloud'></i> Cloud forms</a>
+                </li>
+                -->
+               
+            </ul>
+        </div>
+    </nav>
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <div id="formulario-cadastro" style="display: none;">
+            <a href="#" id="cadastrar-link" style="font-size: 40px; color: #144d80;"><i class='bx bx-message-square-add'></i> Cadastrar Certificações</a>
+            <form id="certification-form" action="/certificacoes" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex.: AWS Certified Solutions Architect ‒ Associate" required>
+                </div>
+                <div class="form-group">
+                    <label for="instituicao">Organização:</label>
+                    <input type="text" class="form-control" id="instituicao" name="instituicao" placeholder="Ex.: AWS" required>
+                </div>
+                <div class="form-group">
+                    <label for="url">URL da Credencial:</label>
+                    <input type="text" class="form-control" id="url" name="url">
+                </div>
+                <div class="form-group">
+                    <label for="dataa">Data de Expiração do Certificado:</label>
+                    <input type="date" class="form-control" id="dataa" name="dataa" required>
+                </div>
+                <div class="form-group">
+                    <label for="imagem">Imagem da Certificação: JPEG ou PNG</label>
+                    <input type="file" class="form-control-file" id="imagem" name="imagem">
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+        <!-- Container para exibir as certificações -->
+        <div id="certifications-container" class="row"></div>
+        <!-- Lista de certificações (inicialmente oculta) -->
+        <ul id="minhas-certificacoes-list" class="list-unstyled"></ul>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-        document.getElementById('cadastrar-link').addEventListener('click', function() {
-            document.getElementById('forms-cadastro').style.display = 'none';
-            document.getElementById('certificacoes-cadastro').style.display = 'block';
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const cadastrarBtn = document.querySelector('#certification-form .btn.btn-primary');
+
+    cadastrarBtn.addEventListener('click', function(event) {
+        document.getElementById('certification-form');
+        location.reload();
+
+    });
+
+    const minhasCertificacoesLink = document.getElementById('minhas-certificacoes-link');
+
+    minhasCertificacoesLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        location.reload();
+    });
+});
+
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch('/certificacoes/usuario');
+        const certificacoes = await response.json();
+        const minhasCertificacoesList = document.getElementById('minhas-certificacoes-list');
+
+        minhasCertificacoesList.innerHTML = ''; // Limpa o conteúdo atual
+
+        if (certificacoes.length > 0) {
+            certificacoes.forEach(certificacao => {
+                const dataFormatada = new Date(certificacao.dataa).toLocaleDateString('pt-BR');
+                const certificacaoItem = document.createElement('li');
+                certificacaoItem.innerHTML = `
+                <div class="certificacao-item">
+
+                    <p>Nome da Certificação:</p>   
+                    <h5>${certificacao.nome}</h5>
+
+                    <p>Nome da Instituição:</p>  
+                    <h5>${certificacao.instituicao}</h5>
+
+                    <p>Data da Certificação:</p>  
+                    <h5>${dataFormatada}</h5>
+
+                    <img src="data:image/png;base64,${certificacao.imagem}" class="card-img-top" alt="Imagem da Certificação">
+                    <a href="${certificacao.url}" class="btn btn-primary" target="_blank">Acessar URL</a>
+
+                </div>
+
+                `;
+                minhasCertificacoesList.appendChild(certificacaoItem);
+            });
+        } else {
+            minhasCertificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
+        }
+    } catch (error) {
+        console.error('Erro ao buscar certificações do usuário:', error.message);
+    }
+});
+
+document.getElementById('cadastrar-link').addEventListener('click', function() {
+    document.getElementById('formulario-cadastro').style.display = 'block';
+    document.getElementById('minhas-certificacoes-list').style.display = 'none';
+});
+
+document.getElementById('minhas-certificacoes-link').addEventListener('click', function() {
+    document.getElementById('minhas-certificacoes-list').style.display = 'block';
+    document.getElementById('formulario-cadastro').style.display = 'none';
+});
+
+document.getElementById('certification-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const nome = formData.get('nome');
+    const instituicao = formData.get('instituicao');
+    const dataa = formData.get('dataa');
+    const imagem = formData.get('imagem').name;
+    const url = formData.get('url');
+
+    console.log("Dados do formulário:", formData);
+    console.log("Nome:", nome);
+    console.log("Instituição:", instituicao);
+    console.log("Data:", dataa);
+    console.log("Imagem:", imagem);
+    console.log("URL:", url);
+
+    try {
+        const response = await fetch('/certificacoes/', {
+            method: 'POST',
+            body: formData
         });
 
-        document.getElementById('minhas-certificacoes-link').addEventListener('click', function() {
-            document.getElementById('certificacoes-cadastro').style.display = 'none';
-            document.getElementById('forms-cadastro').style.display = 'block';
-        });
-    </script>
+        console.log("Resposta do servidor:", response);
+
+        if (!response.ok) {
+            throw new Error('Erro ao cadastrar certificação');
+        }
+
+        const certificationCard = document.createElement('div');
+        certificationCard.classList.add('col-md-4', 'certification-card');
+        certificationCard.innerHTML = `
+            <div class="card">
+                <img src="${URL.createObjectURL(imagem)}" class="card-img-top" alt="Imagem da Certificação">
+                <div class="card-body">
+                    <h5 class="card-title">${nome}</h5>
+                    <p class="card-text"><strong>Instituição:</strong> ${instituicao}</p>
+                    <p class="card-text"><strong>Data de Conclusão:</strong> ${dataa}</p>
+                    <a href="${url}" target="_blank" class="btn btn-light">Acessar Credencial</a>
+                </div>
+            </div>
+        `;
+
+        const certificationsContainer = document.getElementById('certifications-container');
+        certificationsContainer.appendChild(certificationCard);
+
+        this.reset();
+    } catch (error) {
+        console.error('Erro:', error.message);
+    }
+});
+</script>
 </body>
 </html>
