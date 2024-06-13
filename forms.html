@@ -1,50 +1,4 @@
-<?php
-// Inicia a sessão PHP
-session_start();
 
-// Verifica se o código de autorização está presente na URL
-if (isset($_GET['code'])) {
-    $code = $_GET['code']; // Captura o código de autorização do URL
-
-    // Dados necessários para a solicitação do token de acesso
-    $client_id = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-    //$client_secret = 'SEU_CLIENT_SECRET';
-    $redirect_uri = 'https://main.d6627qy2x8xm3.amplifyapp.com/forms.php';
-    $token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
-
-    // Parâmetros da solicitação do token de acesso
-    $params = array(
-        'grant_type' => 'authorization_code',
-        'client_id' => $client_id,
-        //'client_secret' => $client_secret,
-        'redirect_uri' => $redirect_uri,
-        'code' => $code
-    );
-
-    // Realiza a solicitação HTTP POST para obter o token de acesso
-    $ch = curl_init($token_endpoint);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    // Decodifica a resposta JSON para um array associativo
-    $token_data = json_decode($response, true);
-
-    // Verifica se o token de acesso foi recebido
-    if (isset($token_data['access_token'])) {
-        // Salva o token de acesso na variável de sessão
-        $_SESSION['access_token'] = $token_data['access_token'];
-    } else {
-        
-    }
-} else {
-    // Se o código de autorização não estiver presente na URL, redireciona para a página de login
-    header("Location: index.html");
-    exit();
-}
-?>
 
 
 <!DOCTYPE html>
@@ -56,6 +10,54 @@ if (isset($_GET['code'])) {
   <link rel="stylesheet" href="/public/styles/forms.css">
 </head>
 <body>
+  <script>
+    // Assuming you're using a modern JavaScript environment (e.g., Node.js, browser with fetch API)
+  
+  // Set up the necessary variables
+  const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
+  const redirectUri = 'https://main.d6627qy2x8xm3.amplifyapp.com/forms.html'; // Note the change to.html
+  const tokenEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
+  
+  // Check if the authorization code is present in the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  
+  if (code) {
+    // Set up the request parameters
+    const params = new URLSearchParams({
+      grant_type: 'authorization_code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      code: code
+    });
+  
+    // Make the HTTP POST request to obtain the access token
+    fetch(tokenEndpoint, {
+      method: 'POST',
+      body: params.toString(),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+   .then(response => response.json())
+   .then(tokenData => {
+      // Check if the access token was received
+      if (tokenData.access_token) {
+        // Store the access token in local storage (instead of a PHP session)
+        localStorage.setItem('access_token', tokenData.access_token);
+      } else {
+        // Handle error cases
+        console.error('Error obtaining access token:', tokenData);
+      }
+    })
+   .catch(error => {
+      console.error('Error making request:', error);
+    });
+  } else {
+    // If the authorization code is not present, redirect to the login page
+    window.location.href = 'index.html';
+  }
+  </script>
   
   <div class="container mt-5">
     <form action="/forms/salvar" method="POST" id="myForm">
