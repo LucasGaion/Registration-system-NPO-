@@ -1,3 +1,52 @@
+<?php
+// Inicia a sessão PHP
+session_start();
+
+// Verifica se o código de autorização está presente na URL
+if (isset($_GET['code'])) {
+    $code = $_GET['code']; // Captura o código de autorização do URL
+
+    // Dados necessários para a solicitação do token de acesso
+    $client_id = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
+    //$client_secret = 'SEU_CLIENT_SECRET';
+    $redirect_uri = 'https://main.d6627qy2x8xm3.amplifyapp.com/forms.php';
+    $token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
+
+    // Parâmetros da solicitação do token de acesso
+    $params = array(
+        'grant_type' => 'authorization_code',
+        'client_id' => $client_id,
+        //'client_secret' => $client_secret,
+        'redirect_uri' => $redirect_uri,
+        'code' => $code
+    );
+
+    // Realiza a solicitação HTTP POST para obter o token de acesso
+    $ch = curl_init($token_endpoint);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Decodifica a resposta JSON para um array associativo
+    $token_data = json_decode($response, true);
+
+    // Verifica se o token de acesso foi recebido
+    if (isset($token_data['access_token'])) {
+        // Salva o token de acesso na variável de sessão
+        $_SESSION['access_token'] = $token_data['access_token'];
+    } else {
+        
+    }
+} else {
+    // Se o código de autorização não estiver presente na URL, redireciona para a página de login
+    header("Location: index.html");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
