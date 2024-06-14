@@ -217,8 +217,12 @@
 
           console.log('Dados salvos com sucesso:', response);
 
-          // Redirecionar para user.html após o sucesso
-          window.location.href = 'user.html';
+          // Exibir mensagem de confirmação
+          confirmationForms.style.display = 'block';
+          confirmationMessage.innerText = 'Cadastro realizado com sucesso!';
+
+          // Limpar o formulário após o sucesso
+          form.reset();
 
         } catch (error) {
           console.error('Erro ao salvar dados:', error);
