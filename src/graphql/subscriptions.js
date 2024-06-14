@@ -4,6 +4,7 @@
 export const onCreateForm = /* GraphQL */ `
   subscription OnCreateForm($filter: ModelSubscriptionFormFilterInput) {
     onCreateForm(filter: $filter) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -15,7 +16,6 @@ export const onCreateForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename
@@ -25,6 +25,7 @@ export const onCreateForm = /* GraphQL */ `
 export const onUpdateForm = /* GraphQL */ `
   subscription OnUpdateForm($filter: ModelSubscriptionFormFilterInput) {
     onUpdateForm(filter: $filter) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -36,7 +37,6 @@ export const onUpdateForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename
@@ -46,6 +46,7 @@ export const onUpdateForm = /* GraphQL */ `
 export const onDeleteForm = /* GraphQL */ `
   subscription OnDeleteForm($filter: ModelSubscriptionFormFilterInput) {
     onDeleteForm(filter: $filter) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -57,7 +58,6 @@ export const onDeleteForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename

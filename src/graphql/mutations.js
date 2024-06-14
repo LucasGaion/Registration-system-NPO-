@@ -7,6 +7,7 @@ export const createForm = /* GraphQL */ `
     $condition: ModelFormConditionInput
   ) {
     createForm(input: $input, condition: $condition) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -18,7 +19,6 @@ export const createForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename
@@ -31,6 +31,7 @@ export const updateForm = /* GraphQL */ `
     $condition: ModelFormConditionInput
   ) {
     updateForm(input: $input, condition: $condition) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -42,7 +43,6 @@ export const updateForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename
@@ -55,6 +55,7 @@ export const deleteForm = /* GraphQL */ `
     $condition: ModelFormConditionInput
   ) {
     deleteForm(input: $input, condition: $condition) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -66,7 +67,6 @@ export const deleteForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename

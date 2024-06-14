@@ -4,6 +4,7 @@
 export const getForm = /* GraphQL */ `
   query GetForm($id: ID!) {
     getForm(id: $id) {
+      id
       areaAtuacao
       tempoEstudo
       nivelCloud
@@ -15,7 +16,6 @@ export const getForm = /* GraphQL */ `
       conhecimentoLinux
       conhecimentoSeguranca
       conhecimentoIAM
-      id
       createdAt
       updatedAt
       __typename
@@ -30,6 +30,7 @@ export const listForms = /* GraphQL */ `
   ) {
     listForms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         areaAtuacao
         tempoEstudo
         nivelCloud
@@ -41,7 +42,6 @@ export const listForms = /* GraphQL */ `
         conhecimentoLinux
         conhecimentoSeguranca
         conhecimentoIAM
-        id
         createdAt
         updatedAt
         __typename
