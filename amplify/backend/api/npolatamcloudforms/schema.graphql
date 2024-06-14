@@ -1,0 +1,13 @@
+type Form @model {
+  areaAtuacao: String!
+  tempoEstudo: String!
+  nivelCloud: String!
+  conhecimentoAws: String!
+  conhecimentoRedes: String!
+  conhecimentoArmazenamento: String!
+  conhecimentoVirtualizacao: String!
+  conhecimentoWindows: String!
+  conhecimentoLinux: String!
+  conhecimentoSeguranca: String!
+  conhecimentoIAM: String!
+}
