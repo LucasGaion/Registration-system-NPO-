@@ -1,16 +1,16 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: 'src', // Definir 'src' como o diretório raiz
   build: {
-    outDir: '../dist', // Saída será na pasta 'dist' no diretório raiz
+    outDir: 'dist', // Diretório de saída do build
     assetsDir: '.', // Diretório para arquivos de asset (relativo a outDir)
     rollupOptions: {
       input: {
-        main: 'src/index.html',
-        admin: 'src/admin.html',
-        forms: 'src/forms.html',
-        user: 'src/user.html',
+        main: './index.html', // Ponto de entrada principal do seu aplicativo
+        admin: './admin.html', // Arquivo HTML adicional (exemplo)
+        forms: './forms.html', // Arquivo HTML adicional (exemplo)
+        user: './user.html', // Arquivo HTML adicional (exemplo)
       },
     },
   },
