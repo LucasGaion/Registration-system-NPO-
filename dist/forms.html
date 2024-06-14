@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Forms</title>
-  <link rel="stylesheet" href="/forms-y0v3LrRu.css">
-  <!-- Adicione AWS Amplify -->
+  <!-- Adicionar AWS Amplify -->
   <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.0.1/dist/aws-amplify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@aws-amplify/api"></script>
+  <link rel="stylesheet" crossorigin href="/forms-y0v3LrRu.css">
 </head>
 <body>
   
@@ -157,7 +158,7 @@
 
       <!-- Mensagem de Confirmação -->
       <div class="confirmation-forms" id="confirmationForms" style="display: none;">
-        <img src="/img/checked.png" alt="Ok" id="ok" class="confirmation-icon">
+        <img src="/checked-CW67wavV.png" alt="Ok" id="ok" class="confirmation-icon">
         <span id="confirmationMessage"></span>
       </div>
     </form>
@@ -189,7 +190,7 @@
         try {
           // Chamar a mutação GraphQL para salvar os dados
           const graphqlQuery = `
-            mutation SalvarFormulario($input: CreateFormInput!) {
+            mutation CreateForm($input: CreateFormInput!) {
               createForm(input: $input) {
                 id
                 areaAtuacao
@@ -207,7 +208,7 @@
             }
           `;
 
-          const response = await API.graphql({
+          const response = await Amplify.API.graphql({
             query: graphqlQuery,
             variables: {
               input: formObject
@@ -215,6 +216,8 @@
           });
 
           console.log('Dados salvos com sucesso:', response);
+
+          window.location.href = 'user.html';
 
           // Exibir mensagem de confirmação
           confirmationForms.style.display = 'block';
