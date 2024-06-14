@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
     <script>
         // Configurações do provedor de autenticação OAuth 2.0
         const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
@@ -15,10 +13,31 @@
         const responseType = 'code';
         const scope = 'openid email profile';
 
+        // Função para redirecionamento com OAuth 2.0
+        function redirectToOAuth() {
+            const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+            window.location.href = authorizationUrl;
+        }
 
-        // redireciona automaticamente ao provedor
-        const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-        window.location.href = authorizationUrl;
+        // Checa o número de acessos e redireciona conforme necessário
+        function checkAccess() {
+            let accessCount = localStorage.getItem('accessCount') || 0;
+            accessCount = parseInt(accessCount);
+
+            if (accessCount === 0) {
+                // Primeira visita, redireciona para forms.html com OAuth 2.0
+                redirectToOAuth();
+            } else {
+                // Segunda visita em diante, redireciona para user.html
+                window.location.href = 'https://main.d6627qy2x8xm3.amplifyapp.com/user.html';
+            }
+
+            // Incrementa e salva o número de acessos
+            localStorage.setItem('accessCount', accessCount + 1);
+        }
+
+        // Executa a função de checagem de acesso
+        checkAccess();
     </script>
 </body>
 </html>
