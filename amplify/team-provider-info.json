@@ -10,6 +10,11 @@
       "StackName": "amplify-sistemadecadastronpo-dev-b809a",
       "StackId": "arn:aws:cloudformation:us-east-1:395307239096:stack/amplify-sistemadecadastronpo-dev-b809a/94590890-2ccf-11ef-a875-0affea301fff",
       "AmplifyAppId": "d1h8os4syq8ofp"
+    },
+    "categories": {
+      "api": {
+        "SistemadecadastroNPO": {}
+      }
     }
   }
 }

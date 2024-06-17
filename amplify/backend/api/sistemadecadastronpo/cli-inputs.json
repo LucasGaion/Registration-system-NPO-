@@ -1,11 +1,19 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "sistemadecadastronpo",
+    "apiName": "SistemadecadastroNPO",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 7
-    }
+      "expirationTime": 30,
+      "apiKeyExpirationDate": "2024-07-17T17:46:13.868Z",
+      "keyDescription": "api key description"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      }
+    ],
+    "conflictResolution": {}
   }
 }
