@@ -3,6 +3,8 @@ import { createForm } from './graphql/mutations';
 
 const client = generateClient()
 
+console.log(createForm)
+
 const newForm = await client.graphql({
     query: createForm,
     variables: {
@@ -21,3 +23,10 @@ const newForm = await client.graphql({
 	}
     }
 });
+
+console.log(createForm);
+console.log(areaAtuacao);
+console.log(tempoEstudo);
+console.log(nivelCloud);
+console.log(conhecimentoAws);
+console.log(conhecimentoRedes);
