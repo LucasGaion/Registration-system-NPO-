@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "npolatamcloudforms",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authnpolatamcloudforms27133184",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

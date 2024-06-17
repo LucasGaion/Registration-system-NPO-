@@ -1,4 +1,4 @@
-type Form @model {
+type Form @model @auth(rules: [{ allow: public, provider: apiKey }, { allow: private, provider: userPools }]) {
   id: ID!
   areaAtuacao: String!
   tempoEstudo: String!
@@ -11,5 +11,4 @@ type Form @model {
   conhecimentoLinux: String!
   conhecimentoSeguranca: String!
   conhecimentoIAM: String!
-  
 }
