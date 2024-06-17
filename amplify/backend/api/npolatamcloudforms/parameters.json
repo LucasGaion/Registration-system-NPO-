@@ -1,6 +1,0 @@
-{
-  "AppSyncApiName": "npolatamcloudforms",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2024-06-17T14:46:28.509Z"
-}
