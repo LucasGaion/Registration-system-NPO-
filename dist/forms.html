@@ -166,6 +166,7 @@
 
   <!-- Script JavaScript para enviar dados via GraphQL -->
   <script>
+    // Configurar o AWS Amplify com as credenciais da API GraphQL
     Amplify.configure({
       aws_appsync_graphqlEndpoint: 'https://k6jh3i6dcbdlzb3ixfb2olcepm.appsync-api.us-east-1.amazonaws.com/graphql',
       aws_appsync_region: 'us-east-1',
@@ -216,14 +217,8 @@
 
           console.log('Dados salvos com sucesso:', response);
 
-          // Exibir mensagem de confirmação
-          confirmationForms.style.display = 'block';
-          confirmationMessage.textContent = 'Dados salvos com sucesso!';
-          
-          // Opcional: Redirecionar para outra página após alguns segundos
-          setTimeout(() => {
-            window.location.href = 'user.html';
-          }, 3000);
+          // Redirecionar para user.html após o sucesso
+          window.location.href = 'user.html';
 
         } catch (error) {
           console.error('Erro ao salvar dados:', error);
@@ -232,5 +227,6 @@
       });
     });
   </script>
+
 </body>
 </html>
