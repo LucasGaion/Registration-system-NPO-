@@ -10,11 +10,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@aws-amplify/api"></script>
 </head>
 <body>
-  
   <div class="container mt-5">
     <form id="myForm">
       <img src="/public/img/logoNPOnovo.png" alt="Logo NPO" id="logo">
-
       <!-- Área de atuação na NPO -->
       <div class="form-group">
         <label for="areaAtuacao">Qual sua área de atuação na NPO?</label>
@@ -190,8 +188,8 @@
         try {
           // Chamar a mutação GraphQL para salvar os dados
           const graphqlQuery = `
-            mutation CreateForm($input: CreateFormInput!) {
-              createForm(input: $input) {
+            mutation CreateForms($input: CreateFormsInput!) {
+              createForms(input: $input) {
                 id
                 areaAtuacao
                 tempoEstudo
@@ -207,7 +205,6 @@
               }
             }
           `;
-          
 
           const response = await Amplify.API.graphql({
             query: graphqlQuery,
@@ -228,6 +225,5 @@
       });
     });
   </script>
-
 </body>
 </html>
