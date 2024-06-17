@@ -1,15 +1,36 @@
-type Form @model @auth(rules: [{allow: public}]) {
-  id: ID!
+input CreateFormInput {
   areaAtuacao: String!
-  tempoEstudo: String!
-  nivelCloud: String!
   conhecimentoAws: String!
-  conhecimentoRedes: String!
   conhecimentoArmazenamento: String!
+  conhecimentoIAM: String!
+  conhecimentoLinux: String!
+  conhecimentoRedes: String!
+  conhecimentoSeguranca: String!
   conhecimentoVirtualizacao: String!
   conhecimentoWindows: String!
-  conhecimentoLinux: String!
-  conhecimentoSeguranca: String!
-  conhecimentoIAM: String!
+  tempoEstudo: String!  
+  nivelCloud: String!  
 }
- 
+
+type FormPayload {
+  id: ID!
+  areaAtuacao: String!
+  conhecimentoAws: String!
+  conhecimentoArmazenamento: String!
+  conhecimentoIAM: String!
+  conhecimentoLinux: String!
+  conhecimentoRedes: String!
+  conhecimentoSeguranca: String!
+  conhecimentoVirtualizacao: String!
+  conhecimentoWindows: String!
+  tempoEstudo: String!
+  nivelCloud: String!
+}
+
+type Mutation {
+  createForm(input: CreateFormInput!): FormPayload
+}
+
+type Query {
+  _empty: String
+}

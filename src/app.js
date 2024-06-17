@@ -1,32 +1,33 @@
-import { generateClient } from "aws-amplify/api";
-import { createForm } from './graphql/mutations';
-
-const client = generateClient()
-
-console.log(createForm)
-
-const newForm = await client.graphql({
-    query: createForm,
-    variables: {
-        input: {
-		"areaAtuacao": "Lorem ipsum dolor sit amet",
-		"tempoEstudo": "Lorem ipsum dolor sit amet",
-		"nivelCloud": "Lorem ipsum dolor sit amet",
-		"conhecimentoAws": "Lorem ipsum dolor sit amet",
-		"conhecimentoRedes": "Lorem ipsum dolor sit amet",
-		"conhecimentoArmazenamento": "Lorem ipsum dolor sit amet",
-		"conhecimentoVirtualizacao": "Lorem ipsum dolor sit amet",
-		"conhecimentoWindows": "Lorem ipsum dolor sit amet",
-		"conhecimentoLinux": "Lorem ipsum dolor sit amet",
-		"conhecimentoSeguranca": "Lorem ipsum dolor sit amet",
-		"conhecimentoIAM": "Lorem ipsum dolor sit amet"
-	}
+const createForm = async (parent, args, context, info) => {
+    try {
+      // Validate input
+      if (!args.input.tempoEstudo || !args.input.nivelCloud) {
+        throw new Error("Required fields are missing");
+      }
+  
+      // Additional validation logic here
+  
+      // Database operation
+      const form = await context.db.createForm({
+        data: {
+          areaAtuacao: args.input.areaAtuacao,
+          conhecimentoAws: args.input.conhecimentoAws,
+          conhecimentoArmazenamento: args.input.conhecimentoArmazenamento,
+          conhecimentoIAM: args.input.conhecimentoIAM,
+          conhecimentoLinux: args.input.conhecimentoLinux,
+          conhecimentoRedes: args.input.conhecimentoRedes,
+          conhecimentoSeguranca: args.input.conhecimentoSeguranca,
+          conhecimentoVirtualizacao: args.input.conhecimentoVirtualizacao,
+          conhecimentoWindows: args.input.conhecimentoWindows,
+          tempoEstudo: args.input.tempoEstudo,
+          nivelCloud: args.input.nivelCloud,
+        },
+      });
+  
+      return form;
+    } catch (error) {
+      console.error("Error creating form:", error);
+      throw new Error("Runtime Error: " + error.message);
     }
-});
-
-console.log(createForm);
-console.log(areaAtuacao);
-console.log(tempoEstudo);
-console.log(nivelCloud);
-console.log(conhecimentoAws);
-console.log(conhecimentoRedes);
+  };
+  
