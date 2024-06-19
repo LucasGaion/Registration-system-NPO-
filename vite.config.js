@@ -9,24 +9,21 @@ export default defineConfig({
     assetsDir: '.',
     rollupOptions: {
       input: {
-        main: './index.html',
-        admin: './admin.html',
-        forms: './forms.html',
-        user: './user.html',
+        main: 'public/index.html',
+        admin: 'public/admin.html',
+        forms: 'public/forms.html',
+        user: 'public/user.html',
       },
     },
   },
   resolve: {
     alias: {
       './runtimeConfig': './runtimeConfig.browser',
+      buffer: 'rollup-plugin-node-polyfills/polyfills/buffer-es6',
     },
   },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
   define: {
-    global: {}
+    global: {},
+    'process.env': {},
   },
 });
