@@ -1,4 +1,4 @@
-import { API } from 'aws-amplify';
+import { Amplify, API } from 'aws-amplify';
 
 // Configuração do AWS Amplify
 const awsconfig = {
@@ -8,7 +8,7 @@ const awsconfig = {
   aws_appsync_authenticationType: "API_KEY",
   aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
 };
-API.configure(awsconfig);
+Amplify.configure(awsconfig);
 
 // Função para enviar dados para a API GraphQL
 async function submitFormData(formData) {
