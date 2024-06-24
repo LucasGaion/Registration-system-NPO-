@@ -15,15 +15,16 @@ export default defineConfig({
     include: ['aws-amplify']
   },
   build: {
-    outDir: 'dist', 
-    assetsDir: '.', 
+    outDir: 'dist', // Diretório de saída
+    assetsDir: '.', // Diretório dos assets
     rollupOptions: {
-      external: ['lodash'], 
+      external: ['lodash'], // Declarar lodash como um módulo externo
       input: {
         main: './index.html',
         admin: './admin.html',
         forms: './forms.html',
         user: './user.html',
+        app: './app.mjs', // Incluir o arquivo app.mjs como um input
       },
     },
   },
