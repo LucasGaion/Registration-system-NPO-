@@ -18,6 +18,7 @@ export default defineConfig({
     outDir: 'dist', 
     assetsDir: '.', 
     rollupOptions: {
+      external: ['lodash'], 
       input: {
         main: './index.html',
         admin: './admin.html',
