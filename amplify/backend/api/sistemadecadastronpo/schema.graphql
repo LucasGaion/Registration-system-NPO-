@@ -1,3 +1,11 @@
+type Certificacoes @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nomeCerti: String
+  orgCerti: String
+  urlCerti: String
+  dataCerti: AWSDate
+}
+
 type Forms @model @auth(rules: [{allow: public}]) {
   id: ID!
   areaAtuacao: String!
@@ -11,4 +19,6 @@ type Forms @model @auth(rules: [{allow: public}]) {
   conhecimentoLinux: String!
   conhecimentoSeguranca: String!
   conhecimentoIAM: String!
+  Certificacoes: Certificacoes @hasOne
 }
+ 

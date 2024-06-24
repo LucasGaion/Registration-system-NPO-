@@ -28,7 +28,7 @@
         .result-container {
             padding: 20px;
             max-width: 1000px; 
-            width: 1000%;
+            width: 100%;
             box-sizing: border-box;
             margin-bottom: 20px;
         }
@@ -40,7 +40,7 @@
 
         .result-container ul {
             list-style-type: none;
-            padding: 40px;
+            padding: 0;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
@@ -57,17 +57,6 @@
             margin-bottom: 5px;
         }
 
-        .result-container p {
-            margin-top: -10px;
-            white-space: pre-line;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #464545;
-            text-align: left;
-        }
 
         .bold {
             font-weight: bold;
@@ -107,36 +96,46 @@
         }
 
         .certificacao-item {
-            margin-top: 20px;
+            /* margin-top: 20px; */
             margin-right: 20px;
-            width: calc(33.33% - 20px);
-            float: left;
-            border-radius: 10px;
-            overflow: hidden; 
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+            /* width: calc(33.33% - 20px); */
+            /* float: left; */
+            /* border-radius: 10px; */
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .certificacao-item img {
+        .certificacao-item img, .form-item img {
             width: 95%; 
             height: 70%; 
         }
 
-        .certificacao-item p {
-            font-size: 12px; 
-            margin-bottom: 10px; 
-            color: #06010a; 
-            margin-left: 10px; 
+        .certificacao-item p, .form-item p {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #838383;
+            margin-left: 10px;
             margin-top: 10px;
         }
 
-        .certificacao-item h5 {
+        .certificacao-item h5, .form-item h5 {
             margin-top: -10px;
             font-size: 20px; 
             font-weight: bold; 
             margin-bottom: 10px; 
-            color: #06010a; 
+            color: #144d80; 
             margin-left: 10px; 
         }
+
+        .form-item {
+            /* margin-top: 20px; */
+            /* margin-right: 20px; */
+            /* width: calc(33.33% - 20px); */
+            /* float: left; */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }       
     </style>
 </head>
 <body>
@@ -165,26 +164,158 @@
         <div id="content" class="p-4 p-md-5 pt-5">
             <div id="forms-cadastro">
                 <div class="result-container">
-                     
-                    </ul>
+                    <h1>Forms</h1>
+                    <ul id="forms-list" class="list-unstyled"></ul>
                 </div>
             </div>
             <div id="certificacoes-cadastro">
-                
+                <div class="result-container">
+                    <h1>Certificações</h1>
+                    <ul id="certificacoes-list" class="list-unstyled"></ul>
+                </div>
             </div>
         </div>
     </div>
     
+    <script type="module">
+        import { API } from 'aws-amplify';
 
-    <script>
-        document.getElementById('cadastrar-link').addEventListener('click', function() {
-            document.getElementById('forms-cadastro').style.display = 'none';
-            document.getElementById('certificacoes-cadastro').style.display = 'block';
-        });
+        const awsconfig = {
+            aws_project_region: "us-east-1",
+            aws_appsync_graphqlEndpoint: "https://cahg6u6ll5g6howq4n4bdrbvni.appsync-api.us-east-1.amazonaws.com/graphql",
+            aws_appsync_region: "us-east-1",
+            aws_appsync_authenticationType: "API_KEY",
+            aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
+        };
+        API.configure(awsconfig);
 
-        document.getElementById('minhas-certificacoes-link').addEventListener('click', function() {
-            document.getElementById('certificacoes-cadastro').style.display = 'none';
-            document.getElementById('forms-cadastro').style.display = 'block';
+        async function fetchCertificacoes() {
+            try {
+                const graphqlQuery = `
+                    query ListCertificacoes {
+                        listCertificacoes {
+                            items {
+                                id
+                                nomeCerti
+                                orgCerti
+                                urlCerti
+                                dataCerti
+                            }
+                        }
+                    }
+                `;
+                const response = await API.graphql({ query: graphqlQuery });
+                return response.data.listCertificacoes.items;
+            } catch (error) {
+                console.error('Error fetching certifications:', error);
+                throw error;
+            }
+        }
+
+        async function fetchForms() {
+            try {
+                const graphqlQuery = `
+                    query ListForms {
+                        listForms {
+                            items {
+                                id
+                                areaAtuacao
+                                tempoEstudo
+                                nivelCloud
+                                conhecimentoAws
+                                conhecimentoRedes
+                                conhecimentoArmazenamento
+                                conhecimentoVirtualizacao
+                                conhecimentoWindows
+                                conhecimentoLinux
+                                conhecimentoSeguranca
+                                conhecimentoIAM
+                            }
+                        }
+                    }
+                `;
+                const response = await API.graphql({ query: graphqlQuery });
+                return response.data.listForms.items;
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+                throw error;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('cadastrar-link').addEventListener('click', async function() {
+                document.getElementById('forms-cadastro').style.display = 'none';
+                document.getElementById('certificacoes-cadastro').style.display = 'block';
+
+                const certificacoes = await fetchCertificacoes();
+                const certificacoesList = document.getElementById('certificacoes-list');
+                certificacoesList.innerHTML = '';
+
+                if (certificacoes.length > 0) {
+                    certificacoes.forEach(certificacao => {
+                        const dataFormatada = new Date(certificacao.dataCerti).toLocaleDateString('pt-BR');
+                        const certificacaoItem = document.createElement('li');
+                        certificacaoItem.innerHTML = `
+                            <div class="certificacao-item">
+                                <p>Nome da Certificação:</p>   
+                                <h5>${certificacao.nomeCerti}</h5>
+                                <p>Nome da Instituição:</p>  
+                                <h5>${certificacao.orgCerti}</h5>
+                                <p>Data da Certificação:</p>  
+                                <h5>${dataFormatada}</h5>
+                                <a href="${certificacao.urlCerti}" class="btn btn-primary" target="_blank">Acessar URL</a>
+                            </div>
+                        `;
+                        certificacoesList.appendChild(certificacaoItem);
+                    });
+                } else {
+                    certificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
+                }
+            });
+
+            document.getElementById('minhas-certificacoes-link').addEventListener('click', async function() {
+                document.getElementById('certificacoes-cadastro').style.display = 'none';
+                document.getElementById('forms-cadastro').style.display = 'block';
+
+                const forms = await fetchForms();
+                const formsList = document.getElementById('forms-list');
+                formsList.innerHTML = '';
+
+                if (forms.length > 0) {
+                    forms.forEach(form => {
+                        const formItem = document.createElement('li');
+                        formItem.innerHTML = `
+                            <div class="form-item">
+                                <p>Área de Atuação:</p>   
+                                <h5>${form.areaAtuacao}</h5>
+                                <p>Tempo de Estudo:</p>  
+                                <h5>${form.tempoEstudo}</h5>
+                                <p>Nível de Cloud:</p>  
+                                <h5>${form.nivelCloud}</h5>
+                                <p>Conhecimento em AWS:</p>  
+                                <h5>${form.conhecimentoAws}</h5>
+                                <p>Conhecimento em Redes:</p>  
+                                <h5>${form.conhecimentoRedes}</h5>
+                                <p>Conhecimento em Armazenamento:</p>  
+                                <h5>${form.conhecimentoArmazenamento}</h5>
+                                <p>Conhecimento em Virtualização:</p>  
+                                <h5>${form.conhecimentoVirtualizacao}</h5>
+                                <p>Conhecimento em Windows:</p>  
+                                <h5>${form.conhecimentoWindows}</h5>
+                                <p>Conhecimento em Linux:</p>  
+                                <h5>${form.conhecimentoLinux}</h5>
+                                <p>Conhecimento em Segurança:</p>  
+                                <h5>${form.conhecimentoSeguranca}</h5>
+                                <p>Conhecimento em IAM:</p>  
+                                <h5>${form.conhecimentoIAM}</h5>
+                            </div>
+                        `;
+                        formsList.appendChild(formItem);
+                    });
+                } else {
+                    formsList.innerHTML = '<p>Nenhum form encontrado.</p>';
+                }
+            });
         });
     </script>
 </body>
