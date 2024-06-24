@@ -18,6 +18,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      'aws-amplify': 'aws-amplify', // Remova a especificação do arquivo se o Vite estiver tratando como módulo ESM
       './runtimeConfig': './runtimeConfig.browser',
     },
   },
@@ -27,6 +28,9 @@ export default defineConfig({
     exclude: [],
   },
   define: {
-    global: {}
+    global: {},
+  },
+  optimizeDeps: {
+    include: ['buffer', 'aws-amplify', '@aws-amplify/api']
   },
 });

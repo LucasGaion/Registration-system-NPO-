@@ -1,6 +1,7 @@
-import { Amplify, API } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 
-// Configuração do AWS Amplify
+
+// AWS Amplify configuration
 const awsconfig = {
   aws_project_region: "us-east-1",
   aws_appsync_graphqlEndpoint: "https://cahg6u6ll5g6howq4n4bdrbvni.appsync-api.us-east-1.amazonaws.com/graphql",
@@ -10,8 +11,12 @@ const awsconfig = {
 };
 Amplify.configure(awsconfig);
 
-// Função para enviar dados para a API GraphQL
+console.log("AWS Config:", awsconfig);
+
+// Function to submit form data to GraphQL API
 async function submitFormData(formData) {
+  console.log("Submitting form data:", formData);
+
   try {
     const graphqlQuery = `
       mutation CreateForms($input: CreateFormsInput!) {
@@ -34,21 +39,20 @@ async function submitFormData(formData) {
 
     const response = await API.graphql({
       query: graphqlQuery,
-      variables: {
-        input: formData
-      }
+      variables: { input: formData }
     });
 
-    return response.data.createForms; // Retorna os dados do formulário criado
+    console.log("GraphQL Response:", response);
+    return response.data.createForms; // Returns the created form data
   } catch (error) {
-    console.error('Erro ao enviar o formulário:', error);
-    throw error; // Lança o erro para tratamento posterior, se necessário
+    console.error('Error submitting the form:', error);
+    throw error; // Throw the error for further handling if needed
   }
 }
 
-// Adiciona o listener para o evento de submit do formulário
+// Add listener for form submit event
 document.getElementById('myForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // Evita o envio padrão do formulário
+  event.preventDefault(); // Prevent default form submission
 
   const formData = {
     areaAtuacao: document.getElementById('areaAtuacao').value,
@@ -64,14 +68,16 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
     conhecimentoIAM: document.getElementById('conhecimentoIAM').value
   };
 
+  console.log("Form data collected:", formData);
+
   submitFormData(formData)
     .then(result => {
       console.log('Formulário enviado com sucesso!', result);
-      window.location.href = 'user.html'; // Redireciona para user.html
+      window.location.href = 'user.html'; // Redirect to user.html upon successful submission
     })
     .catch(error => {
       console.error('Erro ao enviar o formulário:', error);
       document.getElementById('confirmationMessage').innerText = 'Erro ao enviar o formulário.';
-      document.getElementById('confirmationForms').style.display = 'block';
+      document.getElementById('confirmationForms').style.display = 'block'; // Display error message to user
     });
 });
