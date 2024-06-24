@@ -18,6 +18,7 @@ export default defineConfig({
     outDir: 'dist', // Diretório de saída
     assetsDir: '.', // Diretório dos assets
     rollupOptions: {
+      external: ['lodash'], // Declarar lodash como um módulo externo
       input: {
         main: './index.html',
         admin: './admin.html',
