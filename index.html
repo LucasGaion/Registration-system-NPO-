@@ -5,76 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
     <script>
+        // Configurações do provedor de autenticação OAuth 2.0
         const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-        const redirectUri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html';
+        const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
+        const redirectUri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html'; 
         const responseType = 'code';
         const scope = 'openid email profile';
 
-        const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
-        const tokenEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
-        const userinfoEndpoint = 'https://graph.microsoft.com/oidc/userinfo';
-
-        // Função para extrair parâmetros da URL
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        // Verifica se há um código de autorização na URL após o login
-        const code = getParameterByName('code');
-        if (code) {
-            // Constrói a solicitação para obter o token de acesso
-            const tokenRequestParams = new URLSearchParams({
-                client_id: clientId,
-                redirect_uri: redirectUri,
-                grant_type: 'authorization_code',
-                code: code,
-                scope: scope
-            });
-
-            // Faz a solicitação para o endpoint de token
-            fetch(tokenEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: tokenRequestParams
-            })
-            .then(response => response.json())
-            .then(data => {
-                const accessToken = data.access_token;
-
-                // Faz a solicitação para obter informações do usuário usando o token de acesso
-                fetch(userinfoEndpoint, {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                })
-                .then(response => response.json())
-                .then(userInfo => {
-                    const userEmail = userInfo.email;
-                    console.log('Email do usuário:', userEmail);
-
-                    // Aqui você pode usar o email como precisar no seu aplicativo
-                })
-                .catch(error => {
-                    console.error('Erro ao obter informações do usuário:', error);
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao trocar código por token de acesso:', error);
-            });
-        } else {
-            // Se não houver código na URL, redireciona para o provedor de autenticação
-            const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-            window.location.href = authorizationUrl;
-        }
+        
+        // redireciona automaticamente ao provedor
+        const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+        window.location.href = authorizationUrl;
     </script>
 </body>
 </html>
