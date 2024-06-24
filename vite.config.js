@@ -1,12 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [react()],
+  define: {
+    global: 'window'
+  },
+  resolve: {
+    alias: {
+      'aws-amplify': 'aws-amplify/lib'
+    }
+  },
+  optimizeDeps: {
+    include: ['aws-amplify']
+  },
   build: {
-    outDir: 'dist',
-    assetsDir: '.',
+    outDir: 'dist', 
+    assetsDir: '.', 
     rollupOptions: {
       input: {
         main: './index.html',
@@ -15,22 +25,5 @@ export default defineConfig({
         user: './user.html',
       },
     },
-  },
-  resolve: {
-    alias: {
-      'aws-amplify': 'aws-amplify', // Remova a especificação do arquivo se o Vite estiver tratando como módulo ESM
-      './runtimeConfig': './runtimeConfig.browser',
-    },
-  },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
-  define: {
-    global: {},
-  },
-  optimizeDeps: {
-    include: ['buffer', 'aws-amplify', '@aws-amplify/api']
   },
 });

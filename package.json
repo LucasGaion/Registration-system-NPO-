@@ -20,8 +20,10 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@aws-amplify/api": "^6.0.37",
     "@aws-amplify/api-graphql": "^4.1.6",
-    "aws-amplify": "^6.3.7",
+    "@aws-amplify/core": "^6.3.2",
+    "aws-amplify": "^2.2.0",
     "buffer": "^6.0.3"
   }
 }

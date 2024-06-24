@@ -1,4 +1,4 @@
-import { Amplify } from 'aws-amplify';
+import { API } from 'aws-amplify';
 
 
 // AWS Amplify configuration
@@ -9,7 +9,7 @@ const awsconfig = {
   aws_appsync_authenticationType: "API_KEY",
   aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
 };
-Amplify.configure(awsconfig);
+API.configure(awsconfig);
 
 console.log("AWS Config:", awsconfig);
 
