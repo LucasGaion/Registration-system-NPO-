@@ -24,6 +24,9 @@
     "@aws-amplify/api-graphql": "^4.1.6",
     "@aws-amplify/core": "^6.3.2",
     "aws-amplify": "^2.2.0",
-    "buffer": "^6.0.3"
+    "axios": "^1.7.2",
+    "buffer": "^6.0.3",
+    "express": "^4.19.2",
+    "querystring": "^0.2.1"
   }
 }

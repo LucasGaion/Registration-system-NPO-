@@ -8,6 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="/logoNPOnovo-cPYckG6V.png" type="NPO-LOGO"> 
     <style>
         #forms-cadastro {
             display: none;
@@ -27,7 +28,7 @@
         .result-container {
             padding: 20px;
             max-width: 1000px; 
-            width: 1000%;
+            width: 100%;
             box-sizing: border-box;
             margin-bottom: 20px;
         }
@@ -39,7 +40,7 @@
 
         .result-container ul {
             list-style-type: none;
-            padding: 40px;
+            padding: 0;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
@@ -56,17 +57,6 @@
             margin-bottom: 5px;
         }
 
-        .result-container p {
-            margin-top: -10px;
-            white-space: pre-line;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #464545;
-            text-align: left;
-        }
 
         .bold {
             font-weight: bold;
@@ -106,38 +96,51 @@
         }
 
         .certificacao-item {
-            margin-top: 20px;
+            /* margin-top: 20px; */
             margin-right: 20px;
-            width: calc(33.33% - 20px);
-            float: left;
-            border-radius: 10px;
-            overflow: hidden; 
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+            /* width: calc(33.33% - 20px); */
+            /* float: left; */
+            /* border-radius: 10px; */
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .certificacao-item img {
+        .certificacao-item img, .form-item img {
             width: 95%; 
             height: 70%; 
         }
 
-        .certificacao-item p {
-            font-size: 12px; 
-            margin-bottom: 10px; 
-            color: #06010a; 
-            margin-left: 10px; 
+        .certificacao-item p, .form-item p {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #838383;
+            margin-left: 10px;
             margin-top: 10px;
         }
 
-        .certificacao-item h5 {
+        .certificacao-item h5, .form-item h5 {
             margin-top: -10px;
             font-size: 20px; 
             font-weight: bold; 
             margin-bottom: 10px; 
-            color: #06010a; 
+            color: #144d80; 
             margin-left: 10px; 
         }
+
+        .form-item {
+            /* margin-top: 20px; */
+            /* margin-right: 20px; */
+            /* width: calc(33.33% - 20px); */
+            /* float: left; */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }       
     </style>
-  <link rel="stylesheet" crossorigin href="/admin-Cm1isfTD.css">
+  <script type="module" crossorigin src="/admin-jHCXO_gj.js"></script>
+  <link rel="modulepreload" crossorigin href="/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/index-C_AjSOGl.js">
+  <link rel="stylesheet" crossorigin href="/admin-DUEqlCUl.css">
 </head>
 <body>
     <div class="wrapper d-flex align-items-stretch">
@@ -165,27 +168,18 @@
         <div id="content" class="p-4 p-md-5 pt-5">
             <div id="forms-cadastro">
                 <div class="result-container">
-                     
-                    </ul>
+                    <h1>Forms</h1>
+                    <ul id="forms-list" class="list-unstyled"></ul>
                 </div>
             </div>
             <div id="certificacoes-cadastro">
-                
+                <div class="result-container">
+                    <h1>Certificações</h1>
+                    <ul id="certificacoes-list" class="list-unstyled"></ul>
+                </div>
             </div>
         </div>
     </div>
     
-
-    <script>
-        document.getElementById('cadastrar-link').addEventListener('click', function() {
-            document.getElementById('forms-cadastro').style.display = 'none';
-            document.getElementById('certificacoes-cadastro').style.display = 'block';
-        });
-
-        document.getElementById('minhas-certificacoes-link').addEventListener('click', function() {
-            document.getElementById('certificacoes-cadastro').style.display = 'none';
-            document.getElementById('forms-cadastro').style.display = 'block';
-        });
-    </script>
 </body>
 </html>

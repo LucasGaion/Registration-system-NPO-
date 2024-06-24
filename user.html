@@ -8,6 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
     <link rel="stylesheet" href="/styles/style.css">
     <style>
 
@@ -184,6 +185,9 @@
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
         </div>
+        <div id="confirmationForms" style="display:none;">
+  <p id="confirmationMessage"></p>
+</div>
     </div>
         <!-- Container para exibir as certificações -->
         <div id="certifications-container" class="row"></div>
@@ -191,10 +195,7 @@
         <ul id="minhas-certificacoes-list" class="list-unstyled"></ul>
     </div>
 </div>
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+
 
 <script>
  const certificacoes = {
@@ -296,6 +297,7 @@ document.getElementById('plataforma').addEventListener('change', function() {
 
 import { API } from 'aws-amplify';
 
+// Configuração do AWS Amplify
 const awsconfig = {
   aws_project_region: "us-east-1",
   aws_appsync_graphqlEndpoint: "https://cahg6u6ll5g6howq4n4bdrbvni.appsync-api.us-east-1.amazonaws.com/graphql",
@@ -303,6 +305,7 @@ const awsconfig = {
   aws_appsync_authenticationType: "API_KEY",
   aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
 };
+
 API.configure(awsconfig);
 
 async function submitCertificacaoData(formData) {
@@ -327,12 +330,23 @@ async function submitCertificacaoData(formData) {
     });
 
     console.log("GraphQL Response:", response);
-    return response.data.createCertificacao;
+
+    if (response.data && response.data.createCertificacao) {
+      return response.data.createCertificacao;
+    } else {
+      throw new Error('No data returned from mutation.');
+    }
   } catch (error) {
     console.error('Error submitting the certification:', error);
+    if (error.errors) {
+      error.errors.forEach(err => {
+        console.error(err.message);
+      });
+    }
     throw error;
   }
 }
+
 
 document.getElementById('certification-form').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -349,7 +363,8 @@ document.getElementById('certification-form').addEventListener('submit', functio
   submitCertificacaoData(formData)
     .then(result => {
       console.log('Certificação enviada com sucesso!', result);
-      window.location.href = 'user.html';
+      document.getElementById('confirmationMessage').innerText = 'Certificação enviada com sucesso!';
+      document.getElementById('confirmationForms').style.display = 'block';
     })
     .catch(error => {
       console.error('Erro ao enviar a certificação:', error);
@@ -423,6 +438,7 @@ document.getElementById('minhas-certificacoes-link').addEventListener('click', f
   document.getElementById('minhas-certificacoes-list').style.display = 'block';
   document.getElementById('formulario-cadastro').style.display = 'none';
 });
+
 
   </script>
 
