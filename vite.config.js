@@ -24,7 +24,6 @@ export default defineConfig({
         admin: './admin.html',
         forms: './forms.html',
         user: './user.html',
-        app: './app.mjs', // Incluir o arquivo app.mjs como um input
       },
     },
   },
