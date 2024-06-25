@@ -24,6 +24,8 @@ export default defineConfig({
         admin: './admin.html',
         forms: './forms.html',
         user: './user.html',
+        app: './app.mjs',
+
       },
     },
   },

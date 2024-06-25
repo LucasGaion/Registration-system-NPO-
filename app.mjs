@@ -1,5 +1,6 @@
-import { API } from 'aws-amplify';
 
+import { API } from 'aws-amplify';
+import _ from 'lodash';
 
 // AWS Amplify configuration
 const awsconfig = {
@@ -81,3 +82,5 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
       document.getElementById('confirmationForms').style.display = 'block'; // Display error message to user
     });
 });
+
+
