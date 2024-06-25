@@ -48,6 +48,24 @@
 }
 
 
+#certification-form button {
+  margin-bottom: 20px; 
+}
+
+#confirmationMessage {
+  background-color: white; 
+  display: inline; 
+  padding: 10px;
+  border-radius: 5px; 
+  margin-top: 20px; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  color: #333; 
+  text-align: center; 
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -68,11 +86,11 @@
                 <li>
                     <a href="#" id="cadastrar-link"><i class='bx bx-message-square-add'></i> Cadastrar Certificações</a>
                 </li>
-                <!--
-                     <li>
+                
+                <li>
                     <a href="/forms"><i class='bx bx-cloud'></i> Cloud forms</a>
                 </li>
-                -->
+                
                
             </ul>
         </div>
@@ -311,19 +329,19 @@ API.configure(awsconfig);
 async function submitCertificacaoData(formData) {
   console.log("Submitting form data:", formData);
 
-  try {
-    const graphqlQuery = `
-      mutation CreateCertificacao($input: CreateCertificacoesInput!) {
-        createCertificacao(input: $input) {
-          id
-          nomeCerti
-          orgCerti
-          urlCerti
-          dataCerti
-        }
+  const graphqlQuery = `
+    mutation CreateCertificacoes($input: CreateCertificacoesInput!) {
+      createCertificacoes(input: $input) {
+        id
+        nomeCerti
+        orgCerti
+        urlCerti
+        dataCerti
       }
-    `;
+    }
+  `;
 
+  try {
     const response = await API.graphql({
       query: graphqlQuery,
       variables: { input: formData }
@@ -331,9 +349,12 @@ async function submitCertificacaoData(formData) {
 
     console.log("GraphQL Response:", response);
 
-    if (response.data && response.data.createCertificacao) {
-      return response.data.createCertificacao;
+    // Aqui verificamos se há dados na resposta e se o campo específico está presente
+    if (response.data && response.data.createCertificacoes) {
+      console.log('Certificação enviada com sucesso!', response.data.createCertificacoes);
+      return response.data.createCertificacoes;
     } else {
+      console.error('No data returned from mutation.');
       throw new Error('No data returned from mutation.');
     }
   } catch (error) {
@@ -346,6 +367,7 @@ async function submitCertificacaoData(formData) {
     throw error;
   }
 }
+
 
 
 document.getElementById('certification-form').addEventListener('submit', function(event) {
@@ -361,17 +383,35 @@ document.getElementById('certification-form').addEventListener('submit', functio
   console.log("Form data collected:", formData);
 
   submitCertificacaoData(formData)
-    .then(result => {
-      console.log('Certificação enviada com sucesso!', result);
-      document.getElementById('confirmationMessage').innerText = 'Certificação enviada com sucesso!';
-      document.getElementById('confirmationForms').style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Erro ao enviar a certificação:', error);
-      document.getElementById('confirmationMessage').innerText = 'Erro ao enviar a certificação.';
-      document.getElementById('confirmationForms').style.display = 'block';
-    });
+  .then(result => {
+    console.log('Certificação enviada com sucesso!', result);
+    const confirmationMessage = document.getElementById('confirmationMessage');
+    confirmationMessage.innerText = 'Certificação enviada com sucesso!';
+    confirmationMessage.style.color = 'green';
+    confirmationMessage.style.fontWeight = 'bold';
+    document.getElementById('confirmationForms').style.display = 'block';
+    clearForm(); // Limpa o formulário após a submissão bem-sucedida
+  })
+  .catch(error => {
+    console.error('Erro ao enviar a certificação:', error);
+    const confirmationMessage = document.getElementById('confirmationMessage');
+    confirmationMessage.innerText = 'Erro ao enviar a certificação: ' + error.message;
+    confirmationMessage.style.color = 'red';
+    confirmationMessage.style.fontWeight = 'bold';
+    document.getElementById('confirmationForms').style.display = 'block';
+    clearForm(); // Limpa o formulário também em caso de erro
+  });
 });
+
+function clearForm() {
+  // Limpa cada campo do formulário
+  document.getElementById('plataforma').value = '';
+  document.getElementById('nome').value = '';
+  document.getElementById('instituicao').value = '';
+  document.getElementById('url').value = '';
+  document.getElementById('dataa').value = '';
+}
+
 
 async function fetchCertificacoes() {
   try {
