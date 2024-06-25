@@ -16,9 +16,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist', 
-    assetsDir: '.', 
+    assetsDir: '.', // Diretório dos assets
     rollupOptions: {
-      external: ['lodash'],
       input: {
         main: './index.html',
         admin: './admin.html',
