@@ -15,10 +15,10 @@ export default defineConfig({
     include: ['aws-amplify']
   },
   build: {
-    outDir: 'dist', // Diretório de saída
-    assetsDir: '.', // Diretório dos assets
+    outDir: 'dist', 
+    assetsDir: '.', 
     rollupOptions: {
-      external: ['lodash'], // Declarar lodash como um módulo externo
+      external: ['lodash'],
       input: {
         main: './index.html',
         admin: './admin.html',
