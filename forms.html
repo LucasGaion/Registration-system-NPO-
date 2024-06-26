@@ -9,7 +9,6 @@
 </head>
 <script>
 
-  // Inicia a sessão
 sessionStorage.setItem('access_token', '');
 
 // Função para obter o parâmetro 'code' da URL
@@ -53,9 +52,15 @@ if (code) {
     })
     .catch(error => console.error('Erro na solicitação', error));
 } else {
-    // Se o código de autorização não estiver presente na URL, redireciona para a página de login
-    window.location.href = 'index.html';
+    // Verifica se não estamos na página de login para evitar loop
+    if (!window.location.pathname.includes('index.html')) {
+        // Redireciona para a página de login
+        window.location.href = 'index.html';
+    }
 }
+
+
+
 
 </script>
 <body>
