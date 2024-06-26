@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="/public/styles/forms.css">
   <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
 </head>
-<script>
 
+<script>
 // Inicia a sessão
 sessionStorage.setItem('access_token', '');
 
@@ -21,9 +21,9 @@ function getParameterByName(name) {
 // Verifica se o código de autorização está presente na URL
 const code = getParameterByName('code');
 if (code) {
-    const client_id = '668c4155-1814-4884-bcb5-c735a3505b41';
-    const redirect_uri = 'https://assinaturas.nposistemas.com.br/assinaturas.php';
-    const token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
+    const client_id = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
+    const redirect_uri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html';
+    const token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
 
     // Parâmetros da solicitação do token de acesso
     const params = new URLSearchParams({
@@ -73,10 +73,6 @@ if (code) {
         window.location.href = 'index.html';
     }
 }
-
-
-
-
 </script>
 
 
