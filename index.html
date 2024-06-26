@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft AD Login</title>
 </head>
 <body>
+    <h1>Microsoft AD Login</h1>
+    <button id="loginButton">Login with Microsoft</button>
 
     <script>
         // Configurações do provedor de autenticação OAuth 2.0
@@ -53,6 +56,8 @@
             return data.mail || data.userPrincipalName;
         }
 
+        document.getElementById('loginButton').addEventListener('click', redirectToAuth);
+
         // Verifica se há um código de autorização na URL
         const urlParams = new URLSearchParams(window.location.search);
         const authCode = urlParams.get('code');
@@ -67,9 +72,6 @@
             }).catch(error => {
                 console.error('Erro ao obter o token de acesso ou o email do usuário:', error);
             });
-        } else {
-            // Redireciona para a autenticação
-            redirectToAuth();
         }
     </script>
 </body>
