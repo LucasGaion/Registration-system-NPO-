@@ -9,7 +9,6 @@
 </head>
 
 <script>
-  // Função para obter o parâmetro 'code' da URL
   function getParameterByName(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
@@ -194,6 +193,12 @@ API.configure(awsconfig);
 
 console.log("AWS Config:", awsconfig);
 
+// Function to get the authorization code from URL
+function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
 // Function to submit form data to GraphQL API
 async function submitFormData(formData) {
   console.log("Submitting form data:", formData);
@@ -214,6 +219,7 @@ async function submitFormData(formData) {
           conhecimentoLinux
           conhecimentoSeguranca
           conhecimentoIAM
+          authorizationCode
         }
       }
     `;
@@ -235,6 +241,14 @@ async function submitFormData(formData) {
 document.getElementById('myForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission
 
+  const code = getParameterByName('code');
+  if (!code) {
+    console.error('No authorization code found.');
+    document.getElementById('confirmationMessage').innerText = 'Erro: Código de autorização não encontrado.';
+    document.getElementById('confirmationForms').style.display = 'block'; // Display error message to user
+    return;
+  }
+
   const formData = {
     areaAtuacao: document.getElementById('areaAtuacao').value,
     tempoEstudo: document.getElementById('tempoEstudo').value,
@@ -246,7 +260,8 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
     conhecimentoWindows: document.getElementById('conhecimentoWindows').value,
     conhecimentoLinux: document.getElementById('conhecimentoLinux').value,
     conhecimentoSeguranca: document.getElementById('conhecimentoSeguranca').value,
-    conhecimentoIAM: document.getElementById('conhecimentoIAM').value
+    conhecimentoIAM: document.getElementById('conhecimentoIAM').value,
+    authorizationCode: code
   };
 
   console.log("Form data collected:", formData);
@@ -254,7 +269,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
   submitFormData(formData)
     .then(result => {
       console.log('Formulário enviado com sucesso!', result);
-      window.location.href = 'user.html'; // Redirect to user.html upon successful submission
+      window.location.href = 'user.html';
     })
     .catch(error => {
       console.error('Erro ao enviar o formulário:', error);
@@ -262,7 +277,6 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
       document.getElementById('confirmationForms').style.display = 'block'; // Display error message to user
     });
 });
-
 
 </script>
   

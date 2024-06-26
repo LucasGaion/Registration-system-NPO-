@@ -19,5 +19,6 @@ type Forms @model @auth(rules: [{allow: public}]) {
   conhecimentoLinux: String!
   conhecimentoSeguranca: String!
   conhecimentoIAM: String!
+  authorizationCode: String!
 }
  
