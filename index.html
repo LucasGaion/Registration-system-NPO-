@@ -3,78 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login com Microsoft AD</title>
 </head>
 <body>
+
     <script>
+        // Configurações do provedor de autenticação OAuth 2.0
         const clientId = '8cf6d21d-6371-4da7-9eca-a4aac477492d';
-        const tenantId = '3d43e001-1b92-4697-b855-1d8ca369b21e';
-        const authorizationEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize`;
-        const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
-        const redirectUri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html';
+        const authorizationEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/authorize';
+        const redirectUri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html'; 
         const responseType = 'code';
         const scope = 'openid email profile';
-        //const clientSecret = 'YOUR_CLIENT_SECRET'; // Substitua pelo seu client secret real
 
-        function getQueryStringParams() {
-            const params = {};
-            window.location.search.substring(1).split("&").forEach(function (param) {
-                const [key, value] = param.split("=");
-                params[key] = decodeURIComponent(value);
-            });
-            return params;
-        }
-
-        async function fetchToken(authCode) {
-            const response = await fetch(tokenEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    client_id: clientId,
-                    scope: scope,
-                    code: authCode,
-                    redirect_uri: redirectUri,
-                    grant_type: 'authorization_code',
-                    client_secret: clientSecret
-                })
-            });
-            return response.json();
-        }
-
-        async function fetchUserInfo(accessToken) {
-            const response = await fetch('https://graph.microsoft.com/v1.0/me', {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            });
-            return response.json();
-        }
-
-        async function main() {
-            const params = getQueryStringParams();
-            if (params.code) {
-                try {
-                    const tokenResponse = await fetchToken(params.code);
-                    console.log('Token Response:', tokenResponse);
-                    if (tokenResponse.access_token) {
-                        const userInfo = await fetchUserInfo(tokenResponse.access_token);
-                        console.log('User Info:', userInfo);
-                        alert('User Email: ' + (userInfo.mail || userInfo.userPrincipalName));
-                    } else {
-                        console.error('Failed to obtain access token:', tokenResponse);
-                    }
-                } catch (error) {
-                    console.error('Error during token fetch or user info fetch:', error);
-                }
-            } else {
-                const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-                window.location.href = authorizationUrl;
-            }
-        }
-
-        main();
+        
+        // redireciona automaticamente ao provedor
+        const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+        window.location.href = authorizationUrl;
     </script>
 </body>
 </html>
