@@ -6,6 +6,7 @@
   <title>Formulários</title>
   <link rel="stylesheet" href="/public/styles/forms.css">
   <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
+  
 </head>
 
 <script>
@@ -28,8 +29,32 @@
   <div class="container mt-5">
     <form id="myForm">
       <img src="/public/img/logoNPOnovo.png" alt="Logo NPO" id="logo">
-      <!-- Área de atuação na NPO -->
+
       <div class="form-group">
+
+        <div class="email-warning">
+          Por favor, preencha o email obrigatório
+        </div>
+
+        <div class="form-group email-group">
+        <input type="text" id="email" name="email" class="form-control" placeholder="Digite o seu e-mail" required>
+          <select id="domain" name="domain" class="form-select" required>
+            <option value="" disabled selected hidden>Escolha o domínio</option>
+            <option value="@nposervices.com">@nposervices.com</option>
+            <option value="@external.cnhind.com">@external.cnhind.com</option>
+            <option value="@external.ivecogroup.com">@external.ivecogroup.com</option>
+            <option value="@reckitt.com">@reckitt.com</option>
+            <option value="@rb.com">@rb.com</option>
+            <option value="@cnhind.com">@cnhind.com</option>
+            <option value="@external.stellantis.com">@external.stellantis.com</option>
+            <option value="@equinoxgold.com">@equinoxgold.com</option>
+            <option value="@angloamerican.com">@angloamerican.com</option>
+            <option value="@ongoing.net">@ongoing.net</option>
+            <option value="@ongoingsecurity.com">@ongoingsecurity.com</option>
+          </select>
+      </div>
+          
+        <!-- Área de atuação na NPO -->
         <label for="areaAtuacao">Qual sua área de atuação na NPO?</label>
         <select id="areaAtuacao" name="areaAtuacao" class="form-control" required>
           <option value="">Selecione...</option>
@@ -177,6 +202,67 @@
     </form>
   </div>
 
+<script>
+    function validateEmail() {
+      var nomeInput = document.getElementById('nome').value.trim();
+      var emailPrefixInput = document.getElementById('email').value.trim();
+      var domainSelect = document.getElementById('domain');
+      var selectedDomain = domainSelect.options[domainSelect.selectedIndex].value;
+    
+      // Verifica se o e-mail já possui um domínio inserido
+      var existingDomainIndex = emailPrefixInput.indexOf('@');
+      if (existingDomainIndex !== -1) {
+        // Se o e-mail já possui um domínio, remove-o
+        emailPrefixInput = emailPrefixInput.substring(0, existingDomainIndex);
+      }
+    
+      var email = emailPrefixInput + selectedDomain;
+    
+      // Atualiza o valor do campo de e-mail com o e-mail completo (prefixo + domínio)
+      document.getElementById('email').value = email;
+    
+      // Validação do e-mail inserido
+      var allowedDomains = [
+        '@nposervices.com',
+        '@external.cnhind.com',
+        '@external.ivecogroup.com',
+        '@reckitt.com',
+        '@rb.com',
+        '@cnhind.com',
+        '@external.stellantis.com',
+        '@equinoxgold.com',
+        '@angloamerican.com',
+        '@ongoing.net',
+        '@ongoingsecurity.com'
+      ];
+    
+      var domain = email.substring(email.lastIndexOf('@'));
+    
+      if (!allowedDomains.includes(domain)) {
+        document.getElementById('error').style.display = 'block';
+        return false; // Impede o envio do formulário se o domínio não estiver na lista permitida
+      }
+    
+      // Se o e-mail estiver correto, prossegue com o envio do formulário
+      return true;
+    }
+    
+    // Adiciona o evento de mudança ao elemento com o ID 'domain'
+    document.getElementById('domain').addEventListener('change', function() {
+      var emailPrefix = document.getElementById('email').value.split('@')[0];
+      var selectedDomain = this.value;
+    
+      // Verifica se o e-mail já possui um domínio inserido
+      var existingDomainIndex = emailPrefix.indexOf('@');
+      if (existingDomainIndex !== -1) {
+        // Se o e-mail já possui um domínio, remove-o
+        emailPrefix = emailPrefix.substring(0, existingDomainIndex);
+      }
+    
+      document.getElementById('email').value = emailPrefix + selectedDomain;
+    });
+</script>
+
 <script type="module">
 
 import { API } from 'aws-amplify';
@@ -208,6 +294,7 @@ async function submitFormData(formData) {
       mutation CreateForms($input: CreateFormsInput!) {
         createForms(input: $input) {
           id
+          email
           areaAtuacao
           tempoEstudo
           nivelCloud
@@ -250,6 +337,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
   }
 
   const formData = {
+    email: document.getElementById('email').value,
     areaAtuacao: document.getElementById('areaAtuacao').value,
     tempoEstudo: document.getElementById('tempoEstudo').value,
     nivelCloud: document.getElementById('nivelCloud').value,

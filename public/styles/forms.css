@@ -165,3 +165,21 @@ h1:hover img {
     }
   }
   
+  .email-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+  .email-group input, .email-group select {
+    flex: 1;
+  }
+  .email-group span {
+    margin-left: 10px;
+  }
+  .email-warning {
+    color: rgb(155, 155, 155);
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    margin-left: -350px;
+  }
+  

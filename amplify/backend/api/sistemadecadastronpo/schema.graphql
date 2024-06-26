@@ -8,6 +8,7 @@ type Certificacoes @model @auth(rules: [{allow: public}]) {
 
 type Forms @model @auth(rules: [{allow: public}]) {
   id: ID!
+  email: String!
   areaAtuacao: String!
   tempoEstudo: String!
   nivelCloud: String!
