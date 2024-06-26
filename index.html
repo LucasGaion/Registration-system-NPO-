@@ -14,7 +14,7 @@
         const redirectUri = 'https://main.d1h8os4syq8ofp.amplifyapp.com/forms.html';
         const responseType = 'code';
         const scope = 'openid email profile';
-        const clientSecret = 'YOUR_CLIENT_SECRET'; // Você precisa manter isso seguro e não expor em código front-end
+        //const clientSecret = 'YOUR_CLIENT_SECRET'; // Substitua pelo seu client secret real
 
         function getQueryStringParams() {
             const params = {};
@@ -55,9 +55,19 @@
         async function main() {
             const params = getQueryStringParams();
             if (params.code) {
-                const tokenResponse = await fetchToken(params.code);
-                const userInfo = await fetchUserInfo(tokenResponse.access_token);
-                console.log('User Email:', userInfo.mail || userInfo.userPrincipalName);
+                try {
+                    const tokenResponse = await fetchToken(params.code);
+                    console.log('Token Response:', tokenResponse);
+                    if (tokenResponse.access_token) {
+                        const userInfo = await fetchUserInfo(tokenResponse.access_token);
+                        console.log('User Info:', userInfo);
+                        alert('User Email: ' + (userInfo.mail || userInfo.userPrincipalName));
+                    } else {
+                        console.error('Failed to obtain access token:', tokenResponse);
+                    }
+                } catch (error) {
+                    console.error('Error during token fetch or user info fetch:', error);
+                }
             } else {
                 const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
                 window.location.href = authorizationUrl;
