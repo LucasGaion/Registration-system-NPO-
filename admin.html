@@ -121,7 +121,7 @@
 
         .certificacao-item h5, .form-item h5 {
             margin-top: -10px;
-            font-size: 20px; 
+            font-size: 15px; 
             font-weight: bold; 
             margin-bottom: 10px; 
             color: #144d80; 
@@ -215,34 +215,37 @@
         }
 
         async function fetchForms() {
-            try {
-                const graphqlQuery = `
-                    query ListForms {
-                        listForms {
-                            items {
-                                id
-                                areaAtuacao
-                                tempoEstudo
-                                nivelCloud
-                                conhecimentoAws
-                                conhecimentoRedes
-                                conhecimentoArmazenamento
-                                conhecimentoVirtualizacao
-                                conhecimentoWindows
-                                conhecimentoLinux
-                                conhecimentoSeguranca
-                                conhecimentoIAM
-                            }
-                        }
+    try {
+        const graphqlQuery = `
+            query ListForms {
+                listForms {
+                    items {
+                        id
+                        email
+                        areaAtuacao
+                        tempoEstudo
+                        nivelCloud
+                        conhecimentoAws
+                        conhecimentoRedes
+                        conhecimentoArmazenamento
+                        conhecimentoVirtualizacao
+                        conhecimentoWindows
+                        conhecimentoLinux
+                        conhecimentoSeguranca
+                        conhecimentoIAM
+                        authorizationCode
                     }
-                `;
-                const response = await API.graphql({ query: graphqlQuery });
-                return response.data.listForms.items;
-            } catch (error) {
-                console.error('Error fetching forms:', error);
-                throw error;
+                }
             }
-        }
+        `;
+        const response = await API.graphql({ query: graphqlQuery });
+        return response.data.listForms.items.filter(item => item !== null);
+    } catch (error) {
+        console.error('Error fetching forms:', error);
+        throw error;
+    }
+}
+
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('cadastrar-link').addEventListener('click', async function() {
@@ -288,6 +291,8 @@
                         const formItem = document.createElement('li');
                         formItem.innerHTML = `
                             <div class="form-item">
+                                <p>Email:</p>   
+                                <h5>${form.email}</h5>
                                 <p>Área de Atuação:</p>   
                                 <h5>${form.areaAtuacao}</h5>
                                 <p>Tempo de Estudo:</p>  
@@ -310,6 +315,7 @@
                                 <h5>${form.conhecimentoSeguranca}</h5>
                                 <p>Conhecimento em IAM:</p>  
                                 <h5>${form.conhecimentoIAM}</h5>
+
                             </div>
                         `;
                         formsList.appendChild(formItem);

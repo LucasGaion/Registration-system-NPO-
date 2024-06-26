@@ -177,9 +177,10 @@ h1:hover img {
     margin-left: 10px;
   }
   .email-warning {
-    color: rgb(155, 155, 155);
+    color: rgb(139, 139, 139);
     font-size: 0.9em;
     margin-bottom: 5px;
-    margin-left: -350px;
+    margin-left: -330px;
+    font-weight: bold;
   }
   
