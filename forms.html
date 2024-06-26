@@ -357,7 +357,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
   submitFormData(formData)
     .then(result => {
       console.log('Formulário enviado com sucesso!', result);
-        window.location.href = `user.html`;
+      window.location.href = `user.html?email=${document.getElementById('email').value}&authorizationCode=${code}`;
     })
     .catch(error => {
       console.error('Erro ao enviar o formulário:', error);
