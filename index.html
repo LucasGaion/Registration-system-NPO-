@@ -14,10 +14,48 @@
         const responseType = 'code';
         const scope = 'openid email profile';
 
-        
         // redireciona automaticamente ao provedor
         const authorizationUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
         window.location.href = authorizationUrl;
+
+        // Função para trocar o código de autorização por um token de acesso
+        function getToken(code) {
+            const tokenEndpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
+            const headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            };
+            const data = `grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}`;
+            fetch(tokenEndpoint, { method: 'POST', headers, body: data })
+               .then(response => response.json())
+               .then(data => {
+                    const accessToken = data.access_token;
+                    getUserInfo(accessToken);
+                })
+               .catch(error => console.error(error));
+        }
+
+        // Função para obter as informações do usuário
+        function getUserInfo(accessToken) {
+            const graphEndpoint = 'https://graph.microsoft.com/v1.0/me';
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`
+            };
+            fetch(graphEndpoint, { method: 'GET', headers })
+               .then(response => response.json())
+               .then(data => {
+                    const userEmail = data.mail;
+                    console.log(`Email do usuário: ${userEmail}`);
+                    // Aqui você pode fazer algo com o email do usuário
+                })
+               .catch(error => console.error(error));
+        }
+
+        // Captura o código de autorização na página de redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if (code) {
+            getToken(code);
+        }
     </script>
 </body>
 </html>
