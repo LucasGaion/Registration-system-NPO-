@@ -6,10 +6,58 @@
   <title>Formulários</title>
   <link rel="stylesheet" href="/public/styles/forms.css">
   <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
-  
-
-
 </head>
+<script>
+
+  // Inicia a sessão
+sessionStorage.setItem('access_token', '');
+
+// Função para obter o parâmetro 'code' da URL
+function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Verifica se o código de autorização está presente na URL
+const code = getParameterByName('code');
+if (code) {
+    const client_id = '668c4155-1814-4884-bcb5-c735a3505b41';
+    const redirect_uri = 'https://assinaturas.nposistemas.com.br/assinaturas.php';
+    const token_endpoint = 'https://login.microsoftonline.com/3d43e001-1b92-4697-b855-1d8ca369b21e/oauth2/v2.0/token';
+
+    // Parâmetros da solicitação do token de acesso
+    const params = new URLSearchParams({
+        'grant_type': 'authorization_code',
+        'client_id': client_id,
+        'redirect_uri': redirect_uri,
+        'code': code
+    });
+
+    // Realiza a solicitação HTTP POST para obter o token de acesso
+    fetch(token_endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
+    })
+    .then(response => response.json())
+    .then(token_data => {
+        // Verifica se o token de acesso foi recebido
+        if (token_data.access_token) {
+            // Salva o token de acesso na variável de sessão
+            sessionStorage.setItem('access_token', token_data.access_token);
+        } else {
+            console.error('Erro ao obter o token de acesso');
+        }
+    })
+    .catch(error => console.error('Erro na solicitação', error));
+} else {
+    // Se o código de autorização não estiver presente na URL, redireciona para a página de login
+    window.location.href = 'index.html';
+}
+
+</script>
 <body>
   <div class="container mt-5">
     <form id="myForm">
