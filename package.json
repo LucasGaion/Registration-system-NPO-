@@ -23,6 +23,7 @@
   "dependencies": {
     "aws-amplify": "^2.2.0",
     "buffer": "^6.0.3",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21"
   }
 }
