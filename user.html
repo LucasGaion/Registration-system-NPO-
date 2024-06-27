@@ -13,55 +13,78 @@
     <style>
 
 
-.certificacao-item {
-    margin-top: 50px;
-    /* margin-right: 20px; */
-    /* width: calc(61.33% - -20px); */
-    /* float: left; */
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-
-.certificacao-item img {
-    width: 95%; 
-    height: 70%; 
-}
-
-.certificacao-item p {
-    font-size: 12px; 
-    margin-bottom: 10px; 
-    color: #838383; 
-    margin-left: 10px; 
-    margin-top: 10px;
-}
-
-.certificacao-item h5 {
-    margin-top: -10px;
-    font-size: 20px; 
-    font-weight: bold; 
-    margin-bottom: 10px; 
-    color: #144d80; 
-    margin-left: 10px; 
-}
-
-
-#certification-form button {
-  margin-bottom: 20px; 
-}
-
-#confirmationMessage {
-  background-color: white; 
-  display: inline; 
-  padding: 10px;
-  border-radius: 5px; 
-  margin-top: 20px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-  color: #333; 
-  text-align: center; 
-}
+body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+       
+      
+        #formulario-cadastro, #confirmationForms {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        #certification-form .form-group label {
+            font-weight: bold;
+            color: #03335b;
+        }
+        #certification-form button {
+            background: #144d80;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        #certification-form button:hover {
+            background: #0d355a;
+        }
+        #confirmationMessage {
+            background-color: white;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+            text-align: center;
+        }
+        .certificacao-item {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+        }
+        .certificacao-item p {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #838383;
+        }
+        .certificacao-item h5 {
+            margin-top: -10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #03335b;
+        }
+        .certificacao-item .btn-primary {
+            background-color: #03335b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .certificacao-item .btn-primary:hover {
+            background-color: #03335b;
+        }
 
 
 
@@ -207,6 +230,7 @@
         <div id="confirmationForms" style="display:none;">
   <p id="confirmationMessage"></p>
 </div>
+    
     </div>
         <!-- Container para exibir as certificações -->
         <div id="certifications-container" class="row"></div>
@@ -310,176 +334,216 @@ document.getElementById('plataforma').addEventListener('change', function() {
     }
 }); 
 
+(function() {
+    "use strict";
+
+    var fullHeight = function() {
+        var setHeight = function() {
+            document.querySelectorAll('.js-fullheight').forEach(function(element) {
+                element.style.height = window.innerHeight + 'px';
+            });
+        };
+
+        setHeight();
+        window.addEventListener('resize', setHeight);
+    };
+    fullHeight();
+
+    document.getElementById('sidebarCollapse').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+
+})();
+
+
 </script>
 
-<script type="module">
 
-import { API } from 'aws-amplify';
+
+<script type="module">
+// Função para obter parâmetros da URL
+function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Obter email da URL
+const email = getParameterByName('email');
 
 // Configuração do AWS Amplify
+import { API } from 'aws-amplify';
 const awsconfig = {
-  aws_project_region: "us-east-1",
-  aws_appsync_graphqlEndpoint: "https://cahg6u6ll5g6howq4n4bdrbvni.appsync-api.us-east-1.amazonaws.com/graphql",
-  aws_appsync_region: "us-east-1",
-  aws_appsync_authenticationType: "API_KEY",
-  aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
+    aws_project_region: "us-east-1",
+    aws_appsync_graphqlEndpoint: "https://cahg6u6ll5g6howq4n4bdrbvni.appsync-api.us-east-1.amazonaws.com/graphql",
+    aws_appsync_region: "us-east-1",
+    aws_appsync_authenticationType: "API_KEY",
+    aws_appsync_apiKey: "da2-cvkka4f4efb5nj7gqvl4qiykfq"
 };
 
 API.configure(awsconfig);
 
-async function submitCertificacaoData(formData) {
-  console.log("Submitting form data:", formData);
-
-  const graphqlQuery = `
-    mutation CreateCertificacoes($input: CreateCertificacoesInput!) {
-      createCertificacoes(input: $input) {
-        id
-        nomeCerti
-        orgCerti
-        urlCerti
-        dataCerti
-      }
+// Função para buscar certificações do usuário
+async function fetchCertificacoes(email) {
+    try {
+        const graphqlQuery = `
+            query ListCertificacoes($email: String!) {
+                listCertificacoes(filter: { email: { eq: $email } }) {
+                    items {
+                        id
+                        nomeCerti
+                        orgCerti
+                        urlCerti
+                        dataCerti
+                        email
+                    }
+                }
+            }
+        `;
+        const response = await API.graphql({
+            query: graphqlQuery,
+            variables: { email: email }
+        });
+        return response.data.listCertificacoes.items;
+    } catch (error) {
+        console.error('Error fetching certifications:', error);
+        throw error;
     }
-  `;
-
-  try {
-    const response = await API.graphql({
-      query: graphqlQuery,
-      variables: { input: formData }
-    });
-
-    console.log("GraphQL Response:", response);
-
-    // Aqui verificamos se há dados na resposta e se o campo específico está presente
-    if (response.data && response.data.createCertificacoes) {
-      console.log('Certificação enviada com sucesso!', response.data.createCertificacoes);
-      return response.data.createCertificacoes;
-    } else {
-      console.error('No data returned from mutation.');
-      throw new Error('No data returned from mutation.');
-    }
-  } catch (error) {
-    console.error('Error submitting the certification:', error);
-    if (error.errors) {
-      error.errors.forEach(err => {
-        console.error(err.message);
-      });
-    }
-    throw error;
-  }
-}
-
-
-
-document.getElementById('certification-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const formData = {
-    nomeCerti: document.getElementById('nome').value,
-    orgCerti: document.getElementById('instituicao').value,
-    urlCerti: document.getElementById('url').value,
-    dataCerti: document.getElementById('dataa').value
-  };
-
-  console.log("Form data collected:", formData);
-
-  submitCertificacaoData(formData)
-  .then(result => {
-    console.log('Certificação enviada com sucesso!', result);
-    const confirmationMessage = document.getElementById('confirmationMessage');
-    confirmationMessage.innerText = 'Certificação enviada com sucesso!';
-    confirmationMessage.style.color = 'green';
-    confirmationMessage.style.fontWeight = 'bold';
-    document.getElementById('confirmationForms').style.display = 'block';
-    clearForm(); // Limpa o formulário após a submissão bem-sucedida
-  })
-  .catch(error => {
-    console.error('Erro ao enviar a certificação:', error);
-    const confirmationMessage = document.getElementById('confirmationMessage');
-    confirmationMessage.innerText = 'Erro ao enviar a certificação: ' + error.message;
-    confirmationMessage.style.color = 'red';
-    confirmationMessage.style.fontWeight = 'bold';
-    document.getElementById('confirmationForms').style.display = 'block';
-    clearForm(); // Limpa o formulário também em caso de erro
-  });
-});
-
-function clearForm() {
-  // Limpa cada campo do formulário
-  document.getElementById('plataforma').value = '';
-  document.getElementById('nome').value = '';
-  document.getElementById('instituicao').value = '';
-  document.getElementById('url').value = '';
-  document.getElementById('dataa').value = '';
-}
-
-
-async function fetchCertificacoes() {
-  try {
-    const graphqlQuery = `
-      query ListCertificacoes {
-        listCertificacoes {
-          items {
-            id
-            nomeCerti
-            orgCerti
-            urlCerti
-            dataCerti
-          }
-        }
-      }
-    `;
-
-    const response = await API.graphql({ query: graphqlQuery });
-    return response.data.listCertificacoes.items;
-  } catch (error) {
-    console.error('Error fetching certifications:', error);
-    throw error;
-  }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-  try {
-    const certificacoes = await fetchCertificacoes();
-    const minhasCertificacoesList = document.getElementById('minhas-certificacoes-list');
+    if (email) {
+        try {
+            const certificacoes = await fetchCertificacoes(email);
+            const minhasCertificacoesList = document.getElementById('minhas-certificacoes-list');
 
-    minhasCertificacoesList.innerHTML = '';
+            minhasCertificacoesList.innerHTML = '';
 
-    if (certificacoes.length > 0) {
-      certificacoes.forEach(certificacao => {
-        const dataFormatada = new Date(certificacao.dataCerti).toLocaleDateString('pt-BR');
-        const certificacaoItem = document.createElement('li');
-        certificacaoItem.innerHTML = `
-          <div class="certificacao-item">
-            <p>Nome da Certificação:</p>   
-            <h5>${certificacao.nomeCerti}</h5>
-            <p>Nome da Instituição:</p>  
-            <h5>${certificacao.orgCerti}</h5>
-            <p>Data da Certificação:</p>  
-            <h5>${dataFormatada}</h5>
-            <a href="${certificacao.urlCerti}" class="btn btn-primary" target="_blank">Acessar URL</a>
-          </div>
-        `;
-        minhasCertificacoesList.appendChild(certificacaoItem);
-      });
+            if (certificacoes.length > 0) {
+                certificacoes.forEach(certificacao => {
+                    const dataFormatada = new Date(certificacao.dataCerti).toLocaleDateString('pt-BR');
+                    const certificacaoItem = document.createElement('li');
+                    certificacaoItem.innerHTML = `
+                        <div class="certificacao-item">
+                            <p>Email:</p>   
+                            <h5>${certificacao.email}</h5>
+                            <p>Nome da Certificação:</p>   
+                            <h5>${certificacao.nomeCerti}</h5>
+                            <p>Nome da Instituição:</p>  
+                            <h5>${certificacao.orgCerti}</h5>
+                            <p>Data da Certificação:</p>  
+                            <h5>${dataFormatada}</h5>
+                            <a href="${certificacao.urlCerti}" class="btn btn-primary" target="_blank">Acessar URL</a>
+                        </div>
+                    `;
+                    minhasCertificacoesList.appendChild(certificacaoItem);
+                });
+            } else {
+                minhasCertificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
+            }
+        } catch (error) {
+            console.error('Erro ao buscar certificações do usuário:', error.message);
+        }
     } else {
-      minhasCertificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
+        console.error('No email found in URL.');
     }
-  } catch (error) {
-    console.error('Erro ao buscar certificações do usuário:', error.message);
-  }
 });
 
 document.getElementById('cadastrar-link').addEventListener('click', function() {
-  document.getElementById('formulario-cadastro').style.display = 'block';
-  document.getElementById('minhas-certificacoes-list').style.display = 'none';
+    document.getElementById('formulario-cadastro').style.display = 'block';
+    document.getElementById('minhas-certificacoes-list').style.display = 'none';
 });
 
 document.getElementById('minhas-certificacoes-link').addEventListener('click', function() {
-  document.getElementById('minhas-certificacoes-list').style.display = 'block';
-  document.getElementById('formulario-cadastro').style.display = 'none';
+    document.getElementById('minhas-certificacoes-list').style.display = 'block';
+    document.getElementById('formulario-cadastro').style.display = 'none';
 });
 
+// Função para enviar dados de certificação para o GraphQL API
+async function submitCertificacaoData(formData) {
+    console.log("Submitting form data:", formData);
+
+    const graphqlQuery = `
+        mutation CreateCertificacoes($input: CreateCertificacoesInput!) {
+            createCertificacoes(input: $input) {
+                id
+                nomeCerti
+                orgCerti
+                urlCerti
+                dataCerti
+                email
+            }
+        }
+    `;
+
+    try {
+        const response = await API.graphql({
+            query: graphqlQuery,
+            variables: { input: formData }
+        });
+
+        console.log("GraphQL Response:", response);
+
+        if (response.data && response.data.createCertificacoes) {
+            console.log('Certificação enviada com sucesso!', response.data.createCertificacoes);
+            return response.data.createCertificacoes;
+        } else {
+            console.error('No data returned from mutation.');
+            throw new Error('No data returned from mutation.');
+        }
+    } catch (error) {
+        console.error('Error submitting the certification:', error);
+        if (error.errors) {
+            error.errors.forEach(err => {
+                console.error(err.message);
+            });
+        }
+        throw error;
+    }
+}
+
+document.getElementById('certification-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = {
+        nomeCerti: document.getElementById('nome').value,
+        orgCerti: document.getElementById('instituicao').value,
+        urlCerti: document.getElementById('url').value,
+        dataCerti: document.getElementById('dataa').value,
+        email: email // Inclui o email do usuário no formData
+    };
+
+    console.log("Form data collected:", formData);
+
+    submitCertificacaoData(formData)
+        .then(result => {
+            console.log('Certificação enviada com sucesso!', result);
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            confirmationMessage.innerText = 'Certificação enviada com sucesso!';
+            confirmationMessage.style.color = 'green';
+            confirmationMessage.style.fontWeight = 'bold';
+            document.getElementById('confirmationForms').style.display = 'block';
+            clearForm(); // Limpa o formulário após a submissão bem-sucedida
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a certificação:', error);
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            confirmationMessage.innerText = 'Erro ao enviar a certificação: ' + error.message;
+            confirmationMessage.style.color = 'red';
+            confirmationMessage.style.fontWeight = 'bold';
+            document.getElementById('confirmationForms').style.display = 'block';
+            clearForm(); // Limpa o formulário também em caso de erro
+            location.reload();
+        });
+});
+
+function clearForm() {
+    document.getElementById('plataforma').value = '';
+    document.getElementById('nome').value = '';
+    document.getElementById('instituicao').value = '';
+    document.getElementById('url').value = '';
+    document.getElementById('dataa').value = '';
+}
 
 </script>
 

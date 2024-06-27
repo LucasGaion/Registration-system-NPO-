@@ -1,18 +1,31 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import fs from 'fs';
-import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
-    },
-    port: 5174, // Use a port that's not in use
-  },
   define: {
-    global: 'globalThis', // Adicione essa linha
+    global: 'window'
+  },
+  resolve: {
+    alias: {
+      'aws-amplify': 'aws-amplify/lib'
+    }
+  },
+  optimizeDeps: {
+    include: ['aws-amplify']
+  },
+  build: {
+    outDir: 'dist', // Diretório de saída
+    assetsDir: '.', // Diretório dos assets
+    rollupOptions: {
+      external: ['lodash'], // Declarar lodash como um módulo externo
+      input: {
+        main: './index.html',
+        admin: './admin.html',
+        forms: './forms.html',
+        user: './user.html',
+        app: './app.mjs', // Incluir o arquivo app.mjs como um input
+      },
+    },
   },
 });

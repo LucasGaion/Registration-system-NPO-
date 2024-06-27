@@ -4,6 +4,7 @@ type Certificacoes @model @auth(rules: [{allow: public}]) {
   orgCerti: String!
   urlCerti: String!
   dataCerti: String!
+  email: String!
 }
 
 type Forms @model @auth(rules: [{allow: public}]) {

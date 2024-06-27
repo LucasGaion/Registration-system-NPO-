@@ -198,6 +198,7 @@
                         listCertificacoes {
                             items {
                                 id
+                                email
                                 nomeCerti
                                 orgCerti
                                 urlCerti
@@ -262,6 +263,8 @@
                         const certificacaoItem = document.createElement('li');
                         certificacaoItem.innerHTML = `
                             <div class="certificacao-item">
+                                p>Email:</p>   
+                                <h5>${certificacao.email}</h5>
                                 <p>Nome da Certificação:</p>   
                                 <h5>${certificacao.nomeCerti}</h5>
                                 <p>Nome da Instituição:</p>  
