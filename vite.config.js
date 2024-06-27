@@ -6,11 +6,11 @@ export default defineConfig({
   resolve: {
     alias: {
       'aws-amplify': 'aws-amplify/lib', // Alias for AWS Amplify
-      'lodash-es': 'lodash-es' // Resolve lodash as ES module
+      'lodash-es': 'lodash-es' // Alias for lodash-es
     }
   },
   optimizeDeps: {
-    include: ['aws-amplify', 'lodash-es'] // Include lodash-es for optimization
+    include: ['aws-amplify', 'lodash-es']
   },
   build: {
     outDir: 'dist', // Output directory
