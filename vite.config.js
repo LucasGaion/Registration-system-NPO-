@@ -1,28 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import fs from 'fs';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      'aws-amplify': 'aws-amplify/lib', // Alias for AWS Amplify
-      'lodash-es': 'lodash-es' // Alias for lodash-es
-    }
-  },
-  optimizeDeps: {
-    include: ['aws-amplify', 'lodash-es']
-  },
-  build: {
-    outDir: 'dist', // Output directory
-    assetsDir: '.', // Assets directory
-    rollupOptions: {
-      input: {
-        main: './index.html',
-        admin: './admin.html',
-        forms: './forms.html',
-        user: './user.html',
-      },
-      external: ['lodash-es'] // Declare lodash-es as an external module
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
     },
+    port: 5174, // Use a port that's not in use
+  },
+  define: {
+    global: 'globalThis', // Adicione essa linha
   },
 });
