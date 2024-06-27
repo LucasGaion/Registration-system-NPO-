@@ -24,7 +24,6 @@ export default defineConfig({
         admin: './admin.html',
         forms: './forms.html',
         user: './user.html',
-        app: './app.js', // Incluir o arquivo app.js como um input
       },
       external: ['lodash'] // Declarar lodash como um módulo externo
     },
