@@ -8,7 +8,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'aws-amplify': 'aws-amplify/lib'
+      'aws-amplify': 'aws-amplify/lib', // Alias para AWS Amplify
+      'lodash': 'lodash-es' // Alias para lodash, garantindo que seja tratado como módulo ES
     }
   },
   optimizeDeps: {
@@ -18,14 +19,14 @@ export default defineConfig({
     outDir: 'dist', // Diretório de saída
     assetsDir: '.', // Diretório dos assets
     rollupOptions: {
-      external: ['lodash'], // Declarar lodash como um módulo externo
       input: {
         main: './index.html',
         admin: './admin.html',
         forms: './forms.html',
         user: './user.html',
-        app: './app.mjs', // Incluir o arquivo app.mjs como um input
+        app: './app.js', // Incluir o arquivo app.js como um input
       },
+      external: ['lodash'] // Declarar lodash como um módulo externo
     },
   },
 });
