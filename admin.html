@@ -35,7 +35,7 @@
         }
 
         .result-container h1 {
-            color: #144d80;
+            color: #03335b;
             margin-bottom: 15px;
         }
 
@@ -58,17 +58,16 @@
             margin-bottom: 5px;
         }
 
-
         .bold {
             font-weight: bold;
         }
 
         .bold1 {
             font-weight: bold;
-            border: 1px solid #144d80;
+            border: 1px solid #03335b;
             padding: 5px 8px;
             border-radius: 5px;
-            background-color: #144d80;
+            background-color: #03335b;
             color: #ffffff;
             display: inline-block;
             margin-right: 150px;
@@ -77,7 +76,7 @@
         }
 
         .bold1:hover {
-            background-color: #0d355a; 
+            background-color: #03335b; 
             color: #ffffff; 
         }
 
@@ -97,11 +96,6 @@
         }
 
         .certificacao-item {
-            /* margin-top: 20px; */
-            margin-right: 20px;
-            /* width: calc(33.33% - 20px); */
-            /* float: left; */
-            /* border-radius: 10px; */
             overflow: hidden;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
@@ -124,19 +118,81 @@
             font-size: 15px; 
             font-weight: bold; 
             margin-bottom: 10px; 
-            color: #144d80; 
+            color: #03335b; 
             margin-left: 10px; 
         }
 
         .form-item {
-            /* margin-top: 20px; */
-            /* margin-right: 20px; */
-            /* width: calc(33.33% - 20px); */
-            /* float: left; */
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }       
+        }
+
+        .certificacao-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+        }
+        .certificacao-item p {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #838383;
+        }
+        .certificacao-item h5 {
+            margin-top: -10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #03335b;
+        }
+        .certificacao-item .btn-primary {
+            background-color: #03335b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .certificacao-item .btn-primary:hover {
+            background-color: #03335b;
+        }
+        
+        .result-container {
+            padding: 10px;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .title-container i {
+            font-size: 40px; 
+            margin-right: 10px; 
+            color: #03335b; 
+        }
+
+        #certificacoes-cadastro .title-container i {
+            color: #03335b; 
+        }
+
+        .title-container h1 {
+            font-size: 40px; 
+            margin: 0;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            width: 50%;
+            padding: 10px;
+            border: 2px solid #03335b;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -158,21 +214,33 @@
                     <li>
                         <a href="#" id="cadastrar-link"><i class='bx bx-message-square-add'></i> Certificações</a>
                     </li>
-                    <li>
-                    </li>
                 </ul>
             </div>
         </nav>
         <div id="content" class="p-4 p-md-5 pt-5">
             <div id="forms-cadastro">
                 <div class="result-container">
-                    <h1>Forms</h1>
+                    <div class="title-container">
+                        <i class='bx bx-detail'></i>
+                        <h1>Forms</h1>
+                    </div>
+                    <br>
+                    <div class="search-container">
+                        <input type="text" id="search-forms" placeholder="Pesquisar por e-mail">
+                    </div>
                     <ul id="forms-list" class="list-unstyled"></ul>
                 </div>
             </div>
             <div id="certificacoes-cadastro">
                 <div class="result-container">
-                    <h1>Certificações</h1>
+                    <div class="title-container">
+                        <i class='bx bxs-certification'></i>
+                        <h1>Certificações</h1>
+                    </div>
+                    <br>
+                    <div class="search-container">
+                        <input type="text" id="search-certificacoes" placeholder="Pesquisar por certificação">
+                    </div>
                     <ul id="certificacoes-list" class="list-unstyled"></ul>
                 </div>
             </div>
@@ -216,116 +284,143 @@
         }
 
         async function fetchForms() {
-    try {
-        const graphqlQuery = `
-            query ListForms {
-                listForms {
-                    items {
-                        id
-                        email
-                        areaAtuacao
-                        tempoEstudo
-                        nivelCloud
-                        conhecimentoAws
-                        conhecimentoRedes
-                        conhecimentoArmazenamento
-                        conhecimentoVirtualizacao
-                        conhecimentoWindows
-                        conhecimentoLinux
-                        conhecimentoSeguranca
-                        conhecimentoIAM
-                        authorizationCode
+            try {
+                const graphqlQuery = `
+                    query ListForms {
+                        listForms {
+                            items {
+                                id
+                                email
+                                areaAtuacao
+                                tempoEstudo
+                                nivelCloud
+                                conhecimentoAws
+                                conhecimentoRedes
+                                conhecimentoArmazenamento
+                                conhecimentoVirtualizacao
+                                conhecimentoWindows
+                                conhecimentoLinux
+                                conhecimentoSeguranca
+                                conhecimentoIAM
+                                authorizationCode
+                            }
+                        }
                     }
-                }
+                `;
+                const response = await API.graphql({ query: graphqlQuery });
+                return response.data.listForms.items.filter(item => item !== null);
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+                throw error;
             }
-        `;
-        const response = await API.graphql({ query: graphqlQuery });
-        return response.data.listForms.items.filter(item => item !== null);
-    } catch (error) {
-        console.error('Error fetching forms:', error);
-        throw error;
-    }
-}
+        }
 
+        function filterList(items, searchTerm, keys) {
+            return items.filter(item => 
+                keys.some(key => item[key] && item[key].toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+        }
+
+        function renderCertificacoes(certificacoes) {
+            const certificacoesList = document.getElementById('certificacoes-list');
+            certificacoesList.innerHTML = '';
+
+            if (certificacoes.length > 0) {
+                certificacoes.forEach(certificacao => {
+                    const dataFormatada = new Date(certificacao.dataCerti).toLocaleDateString('pt-BR');
+                    const certificacaoItem = document.createElement('li');
+                    certificacaoItem.innerHTML = `
+                        <div class="certificacao-item">
+                            <p>Email:</p>   
+                            <h5>${certificacao.email}</h5>
+                            <p>Nome da Certificação:</p>   
+                            <h5>${certificacao.nomeCerti}</h5>
+                            <p>Nome da Instituição:</p>  
+                            <h5>${certificacao.orgCerti}</h5>
+                            <p>Data da Certificação:</p>  
+                            <h5>${dataFormatada}</h5>
+                            <a href="${certificacao.urlCerti}" class="btn btn-primary" target="_blank">Acessar URL</a>
+                        </div>
+                    `;
+                    certificacoesList.appendChild(certificacaoItem);
+                });
+            } else {
+                certificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
+            }
+        }
+
+        function renderForms(forms) {
+            const formsList = document.getElementById('forms-list');
+            formsList.innerHTML = '';
+
+            if (forms.length > 0) {
+                forms.forEach(form => {
+                    const formItem = document.createElement('li');
+                    formItem.innerHTML = `
+                        <div class="form-item">
+                            <p>Email:</p>   
+                            <h5>${form.email}</h5>
+                            <p>Área de Atuação:</p>   
+                            <h5>${form.areaAtuacao}</h5>
+                            <p>Tempo de Estudo:</p>  
+                            <h5>${form.tempoEstudo}</h5>
+                            <p>Nível de Cloud:</p>  
+                            <h5>${form.nivelCloud}</h5>
+                            <p>Conhecimento em AWS:</p>  
+                            <h5>${form.conhecimentoAws}</h5>
+                            <p>Conhecimento em Redes:</p>  
+                            <h5>${form.conhecimentoRedes}</h5>
+                            <p>Conhecimento em Armazenamento:</p>  
+                            <h5>${form.conhecimentoArmazenamento}</h5>
+                            <p>Conhecimento em Virtualização:</p>  
+                            <h5>${form.conhecimentoVirtualizacao}</h5>
+                            <p>Conhecimento em Windows:</p>  
+                            <h5>${form.conhecimentoWindows}</h5>
+                            <p>Conhecimento em Linux:</p>  
+                            <h5>${form.conhecimentoLinux}</h5>
+                            <p>Conhecimento em Segurança:</p>  
+                            <h5>${form.conhecimentoSeguranca}</h5>
+                            <p>Conhecimento em IAM:</p>  
+                            <h5>${form.conhecimentoIAM}</h5>
+                        </div>
+                    `;
+                    formsList.appendChild(formItem);
+                });
+            } else {
+                formsList.innerHTML = '<p>Nenhum form encontrado.</p>';
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
+            let certificacoes = [];
+            let forms = [];
+
             document.getElementById('cadastrar-link').addEventListener('click', async function() {
                 document.getElementById('forms-cadastro').style.display = 'none';
                 document.getElementById('certificacoes-cadastro').style.display = 'block';
 
-                const certificacoes = await fetchCertificacoes();
-                const certificacoesList = document.getElementById('certificacoes-list');
-                certificacoesList.innerHTML = '';
-
-                if (certificacoes.length > 0) {
-                    certificacoes.forEach(certificacao => {
-                        const dataFormatada = new Date(certificacao.dataCerti).toLocaleDateString('pt-BR');
-                        const certificacaoItem = document.createElement('li');
-                        certificacaoItem.innerHTML = `
-                            <div class="certificacao-item">
-                                p>Email:</p>   
-                                <h5>${certificacao.email}</h5>
-                                <p>Nome da Certificação:</p>   
-                                <h5>${certificacao.nomeCerti}</h5>
-                                <p>Nome da Instituição:</p>  
-                                <h5>${certificacao.orgCerti}</h5>
-                                <p>Data da Certificação:</p>  
-                                <h5>${dataFormatada}</h5>
-                                <a href="${certificacao.urlCerti}" class="btn btn-primary" target="_blank">Acessar URL</a>
-                            </div>
-                        `;
-                        certificacoesList.appendChild(certificacaoItem);
-                    });
-                } else {
-                    certificacoesList.innerHTML = '<p>Nenhuma certificação encontrada.</p>';
-                }
+                certificacoes = await fetchCertificacoes();
+                renderCertificacoes(certificacoes);
             });
 
             document.getElementById('minhas-certificacoes-link').addEventListener('click', async function() {
                 document.getElementById('certificacoes-cadastro').style.display = 'none';
                 document.getElementById('forms-cadastro').style.display = 'block';
 
-                const forms = await fetchForms();
-                const formsList = document.getElementById('forms-list');
-                formsList.innerHTML = '';
+                forms = await fetchForms();
+                renderForms(forms);
+            });
 
-                if (forms.length > 0) {
-                    forms.forEach(form => {
-                        const formItem = document.createElement('li');
-                        formItem.innerHTML = `
-                            <div class="form-item">
-                                <p>Email:</p>   
-                                <h5>${form.email}</h5>
-                                <p>Área de Atuação:</p>   
-                                <h5>${form.areaAtuacao}</h5>
-                                <p>Tempo de Estudo:</p>  
-                                <h5>${form.tempoEstudo}</h5>
-                                <p>Nível de Cloud:</p>  
-                                <h5>${form.nivelCloud}</h5>
-                                <p>Conhecimento em AWS:</p>  
-                                <h5>${form.conhecimentoAws}</h5>
-                                <p>Conhecimento em Redes:</p>  
-                                <h5>${form.conhecimentoRedes}</h5>
-                                <p>Conhecimento em Armazenamento:</p>  
-                                <h5>${form.conhecimentoArmazenamento}</h5>
-                                <p>Conhecimento em Virtualização:</p>  
-                                <h5>${form.conhecimentoVirtualizacao}</h5>
-                                <p>Conhecimento em Windows:</p>  
-                                <h5>${form.conhecimentoWindows}</h5>
-                                <p>Conhecimento em Linux:</p>  
-                                <h5>${form.conhecimentoLinux}</h5>
-                                <p>Conhecimento em Segurança:</p>  
-                                <h5>${form.conhecimentoSeguranca}</h5>
-                                <p>Conhecimento em IAM:</p>  
-                                <h5>${form.conhecimentoIAM}</h5>
+            document.getElementById('search-certificacoes').addEventListener('input', function() {
+                const searchTerm = this.value;
+                const filteredCertificacoes = filterList(certificacoes, searchTerm, ['nomeCerti', 'email']);
+                renderCertificacoes(filteredCertificacoes);
+            });
 
-                            </div>
-                        `;
-                        formsList.appendChild(formItem);
-                    });
-                } else {
-                    formsList.innerHTML = '<p>Nenhum form encontrado.</p>';
-                }
+            document.getElementById('search-forms').addEventListener('input', function() {
+                const searchTerm = this.value;
+                const filteredForms = filterList(forms, searchTerm, ['email']);
+                renderForms(filteredForms);
             });
         });
     </script>
