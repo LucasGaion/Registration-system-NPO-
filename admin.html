@@ -106,7 +106,7 @@
         }
 
         .certificacao-item p, .form-item p {
-            font-size: 12px;
+            font-size: 15px;
             margin-bottom: 10px;
             color: #838383;
             margin-left: 10px;
@@ -132,17 +132,17 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 8px;
             background-color: #fff;
         }
         .certificacao-item p {
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 10px;
             color: #838383;
         }
         .certificacao-item h5 {
             margin-top: -10px;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: bold;
             margin-bottom: 10px;
             color: #03335b;
@@ -192,7 +192,22 @@
             border: 2px solid #03335b;
             border-radius: 4px;
             margin-top: 10px;
+            margin-left: 10px;
         }
+
+        #download-csv, #download-forms-csv {
+            background-color: #03335b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        #download-csv:hover, #download-forms-csv:hover {
+            background-color: #022c4a;
+        }
+
     </style>
 </head>
 <body>
@@ -227,6 +242,9 @@
                     <br>
                     <div class="search-container">
                         <input type="text" id="search-forms" placeholder="Pesquisar por e-mail">
+                        <button id="download-forms-csv" class="btn btn-primary" style="margin-left: 20px;">
+                            <i class='bx bx-download'></i> Download CSV
+                        </button>
                     </div>
                     <ul id="forms-list" class="list-unstyled"></ul>
                 </div>
@@ -240,14 +258,40 @@
                     <br>
                     <div class="search-container">
                         <input type="text" id="search-certificacoes" placeholder="Pesquisar por certificação">
+                        <button id="download-csv" class="btn btn-primary" style="margin-left: 20px;">
+                            <i class='bx bx-download'></i> Download CSV
+                        </button>
                     </div>
-                    <ul id="certificacoes-list" class="list-unstyled"></ul>
+                    <ul id="certificacoes-list" class="list-unstyled"></ul>   
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        (function() {
+            "use strict";
+
+            var fullHeight = function() {
+                var setHeight = function() {
+                    document.querySelectorAll('.js-fullheight').forEach(function(element) {
+                        element.style.height = window.innerHeight + 'px';
+                    });
+                };
+
+                setHeight();
+                window.addEventListener('resize', setHeight);
+            };
+            fullHeight();
+
+            document.getElementById('sidebarCollapse').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+
+        })();
+    </script>
     
     <script type="module">
+        
         import { API } from 'aws-amplify';
 
         const awsconfig = {
@@ -392,7 +436,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            let certificacoes = [];
+            let certificacoes = []; // Defina a variável globalmente
             let forms = [];
 
             document.getElementById('cadastrar-link').addEventListener('click', async function() {
@@ -422,7 +466,83 @@
                 const filteredForms = filterList(forms, searchTerm, ['email']);
                 renderForms(filteredForms);
             });
+
+            document.getElementById('download-csv').addEventListener('click', function() {
+                downloadCSV(certificacoes, 'certificacoes.csv');
+            });
+
+            document.getElementById('download-forms-csv').addEventListener('click', function() {
+                downloadFormsCSV(forms, 'forms.csv');
+            });
         });
+
+        function downloadCSV(data, filename) {
+            const csvRows = [];
+            const headers = ["Email", "Nome da Certificação", "Nome da Instituição", "Data da Certificação"];
+            csvRows.push(headers.join(','));
+
+            for (const row of data) {
+                const values = [
+                    row.email,
+                    row.nomeCerti,
+                    row.orgCerti,
+                    new Date(row.dataCerti).toLocaleDateString('pt-BR')
+                ];
+                csvRows.push(values.join(','));
+            }
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', filename);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function downloadFormsCSV(data, filename) {
+            const csvRows = [];
+            const headers = [
+                "Email", "Área de Atuação", "Tempo de Estudo", "Nível de Cloud", 
+                "Conhecimento em AWS", "Conhecimento em Redes", "Conhecimento em Armazenamento", 
+                "Conhecimento em Virtualização", "Conhecimento em Windows", 
+                "Conhecimento em Linux", "Conhecimento em Segurança", "Conhecimento em IAM"
+            ];
+            csvRows.push(headers.join(','));
+
+            for (const row of data) {
+                const values = [
+                    row.email,
+                    row.areaAtuacao,
+                    row.tempoEstudo,
+                    row.nivelCloud,
+                    row.conhecimentoAws,
+                    row.conhecimentoRedes,
+                    row.conhecimentoArmazenamento,
+                    row.conhecimentoVirtualizacao,
+                    row.conhecimentoWindows,
+                    row.conhecimentoLinux,
+                    row.conhecimentoSeguranca,
+                    row.conhecimentoIAM
+                ];
+                csvRows.push(values.join(','));
+            }
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', filename);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
     </script>
 </body>
 </html>
