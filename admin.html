@@ -8,207 +8,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/styles/style.css">
+    <link rel="stylesheet" href="/public/styles/admin.css">
     <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
-    <style>
-        #forms-cadastro {
-            display: none;
-        }
-
-        #certificacoes-cadastro {
-            display: block;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .result-container {
-            padding: 20px;
-            max-width: 1000px; 
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
-
-        .result-container h1 {
-            color: #03335b;
-            margin-bottom: 15px;
-        }
-
-        .result-container ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .result-container li {
-            margin-bottom: 18px;
-            width: 48%; 
-        }
-
-        .result-container li label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .bold1 {
-            font-weight: bold;
-            border: 1px solid #03335b;
-            padding: 5px 8px;
-            border-radius: 5px;
-            background-color: #03335b;
-            color: #ffffff;
-            display: inline-block;
-            margin-right: 150px;
-            cursor: pointer; 
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .bold1:hover {
-            background-color: #03335b; 
-            color: #ffffff; 
-        }
-
-        form h1 {
-            color: #06010a;
-            margin-bottom: 15px;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .col-md-4 {
-            flex: 0 0 33.33%;
-            max-width: 33.33%;
-        }
-
-        .certificacao-item {
-            overflow: hidden;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .certificacao-item img, .form-item img {
-            width: 95%; 
-            height: 70%; 
-        }
-
-        .certificacao-item p, .form-item p {
-            font-size: 15px;
-            margin-bottom: 10px;
-            color: #838383;
-            margin-left: 10px;
-            margin-top: 10px;
-        }
-
-        .certificacao-item h5, .form-item h5 {
-            margin-top: -10px;
-            font-size: 15px; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-            color: #03335b; 
-            margin-left: 10px; 
-        }
-
-        .form-item {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .certificacao-item {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 8px;
-            background-color: #fff;
-        }
-        .certificacao-item p {
-            font-size: 15px;
-            margin-bottom: 10px;
-            color: #838383;
-        }
-        .certificacao-item h5 {
-            margin-top: -10px;
-            font-size: 15px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #03335b;
-        }
-        .certificacao-item .btn-primary {
-            background-color: #03335b;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-        .certificacao-item .btn-primary:hover {
-            background-color: #03335b;
-        }
-        
-        .result-container {
-            padding: 10px;
-        }
-
-        .title-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .title-container i {
-            font-size: 40px; 
-            margin-right: 10px; 
-            color: #03335b; 
-        }
-
-        #certificacoes-cadastro .title-container i {
-            color: #03335b; 
-        }
-
-        .title-container h1 {
-            font-size: 40px; 
-            margin: 0;
-        }
-
-        .search-container {
-            margin-bottom: 20px;
-        }
-
-        .search-container input {
-            width: 50%;
-            padding: 10px;
-            border: 2px solid #03335b;
-            border-radius: 4px;
-            margin-top: 10px;
-            margin-left: 10px;
-        }
-
-        #download-csv, #download-forms-csv {
-            background-color: #03335b;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-
-        #download-csv:hover, #download-forms-csv:hover {
-            background-color: #022c4a;
-        }
-
-    </style>
 </head>
 <body>
     <div class="wrapper d-flex align-items-stretch">
@@ -224,10 +25,10 @@
                 <h1><a href="" class="logo">Tela Admin</a></h1>
                 <ul class="list-unstyled components mb-5">
                     <li>
-                        <a href="#" id="minhas-certificacoes-link"><i class='bx bxs-certification'></i> Forms</a>
+                        <a href="#" id="minhas-certificacoes-link"><i class='bx bx-detail'></i> Forms</a>
                     </li>
                     <li>
-                        <a href="#" id="cadastrar-link"><i class='bx bx-message-square-add'></i> Certificações</a>
+                        <a href="#" id="cadastrar-link"><i class='bx bxs-certification'></i> Certificações</a>
                     </li>
                 </ul>
             </div>
@@ -291,6 +92,7 @@
     </script>
     
     <script type="module">
+
         
         import { API } from 'aws-amplify';
 

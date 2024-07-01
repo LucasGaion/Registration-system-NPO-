@@ -165,23 +165,44 @@ h1:hover img {
       opacity: 1;
     }
   }
+
   
   .email-group {
     display: flex;
     align-items: center;
+    position: relative; 
     margin-bottom: 1em;
-  }
-  .email-group input, .email-group select {
-    flex: 1;
-  }
-  .email-group span {
+}
+
+.email-group input {
+    width: 318%;
+    padding-left: 40px; 
+
+}
+
+.email-group span {
     margin-left: 10px;
-  }
-  .email-warning {
-    color: rgb(139, 139, 139);
+}
+
+.email-warning {
+    color: rgb(255, 255, 255);
+    background-color: #03335b;
     font-size: 0.9em;
+    border-radius: 3px;
     margin-bottom: 5px;
-    margin-left: -330px;
+    margin-left: -325px;
     font-weight: bold;
-  }
+    display: inline-flex;
+    padding: 5px;
+}
+
+.email-group i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-20%);
+    pointer-events: none; 
+    color: #03335b; 
+}
+
   

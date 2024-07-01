@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulários</title>
   <link rel="stylesheet" href="/public/styles/forms.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="icon" href="/public/img/logoNPOnovo.png" type="NPO-LOGO"> 
   
 </head>
@@ -37,22 +38,13 @@
         </div>
 
         <div class="form-group email-group">
-        <input type="text" id="email" name="email" class="form-control" placeholder="Digite o seu e-mail" required>
-          <select id="domain" name="domain" class="form-select" required>
-            <option value="" disabled selected hidden>Escolha o domínio</option>
-            <option value="@nposervices.com">@nposervices.com</option>
-            <option value="@external.cnhind.com">@external.cnhind.com</option>
-            <option value="@external.ivecogroup.com">@external.ivecogroup.com</option>
-            <option value="@reckitt.com">@reckitt.com</option>
-            <option value="@rb.com">@rb.com</option>
-            <option value="@cnhind.com">@cnhind.com</option>
-            <option value="@external.stellantis.com">@external.stellantis.com</option>
-            <option value="@equinoxgold.com">@equinoxgold.com</option>
-            <option value="@angloamerican.com">@angloamerican.com</option>
-            <option value="@ongoing.net">@ongoing.net</option>
-            <option value="@ongoingsecurity.com">@ongoingsecurity.com</option>
-          </select>
-      </div>
+          <label for="email">
+             <input type="text" id="email" name="email" class="form-control" placeholder="@nposervices.com" required>
+             <i class="bx bxs-envelope"></i>
+          </label>
+       </div>
+       
+
           
         <!-- Área de atuação na NPO -->
         <label for="areaAtuacao">Qual sua área de atuação na NPO?</label>
@@ -203,7 +195,7 @@
   </div>
 
 <script>
-    function validateEmail() {
+    /*function validateEmail() {
       var nomeInput = document.getElementById('nome').value.trim();
       var emailPrefixInput = document.getElementById('email').value.trim();
       var domainSelect = document.getElementById('domain');
@@ -260,7 +252,7 @@
       }
     
       document.getElementById('email').value = emailPrefix + selectedDomain;
-    });
+    });*/
 </script>
 
 <script type="module">
